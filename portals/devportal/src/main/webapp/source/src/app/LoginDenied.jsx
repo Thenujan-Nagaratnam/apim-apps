@@ -1,3 +1,6 @@
+/* eslint-disable react/no-deprecated */
+/* eslint-disable max-len */
+/* eslint-disable react/button-has-type */
 /*
  * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
@@ -76,6 +79,7 @@ function onGoToAnonymousView() {
     window.location = Settings.app.context + '/services/auth/callback/logout';
 }
 
+// eslint-disable-next-line require-jsdoc
 class LoginDenied extends Component {
     componentWillMount() {
         document.body.style.backgroundColor = '#dfdfdf';
@@ -84,6 +88,8 @@ class LoginDenied extends Component {
     componentWillUnmount() {
         document.body.style.backgroundColor = null;
     }
+
+    // eslint-disable-next-line require-jsdoc
     render() {
         return (
             <div style={messageStyles}>
@@ -102,7 +108,10 @@ class LoginDenied extends Component {
                 </p>
                 <div>
                     {this.props.IsAnonymousModeEnabled ? (
+                        // eslint-disable-next-line react/jsx-no-comment-textnodes
                         <div>
+                            // eslint-disable-next-line max-len
+                            // eslint-disable-next-line react/button-has-type, react/button-has-type, react/button-has-type, react/button-has-type
                             <button onClick={onGoToAnonymousView} style={buttonStyleRetry}>
                                 <FormattedMessage
                                     id='LoginDenied.anonymousview'

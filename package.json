@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "mui-markdown": "^1.1.13",
+    "react-resizable": "^3.0.5"
+  }
+}

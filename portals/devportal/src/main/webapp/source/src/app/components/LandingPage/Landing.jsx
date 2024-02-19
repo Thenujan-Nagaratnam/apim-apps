@@ -7,6 +7,7 @@ import Carousel from './Carousel';
 import ApisWithTag from './ApisWithTag';
 import ParallaxScroll from './ParallaxScroll';
 import Contact from './Contact';
+import AISearchAssistant from '../Apis/Chat/AISearchAssistant';
 
 const styles = () => ({
     root: {
@@ -84,6 +85,7 @@ function Landing(props) {
                     )}
                 </Grid>
             </div>
+            <AISearchAssistant />
             {parallaxActive && (
                 <div className={classes.fullWidthBack}>
                     <ParallaxScroll index={1} />
@@ -95,7 +97,6 @@ function Landing(props) {
                     <Contact />
                 </div>
             )}
-
         </div>
     );
 }

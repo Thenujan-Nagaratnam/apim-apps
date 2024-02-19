@@ -25,6 +25,7 @@ import Settings from 'AppComponents/Shared/SettingsContext';
 import ResourceNotFound from '../Base/Errors/ResourceNotFound';
 import API from '../../data/api';
 import ApiThumb from '../Apis/Listing/ApiThumb';
+// import AISearchAssistant from '../Chat/AISearchAssistant';
 
 const useStyles = makeStyles(() => ({
     tagedApisWrapper: {
@@ -80,6 +81,7 @@ function ApisWithTag(props) {
                     {apis.list.map((api) => (
                         <ApiThumb api={api} key={api.id} />
                     ))}
+                    {/* <AISearchAssistant /> */}
                 </div>
             )
         );
