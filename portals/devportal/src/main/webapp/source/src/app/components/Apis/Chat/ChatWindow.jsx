@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Container, Box, IconButton } from '@mui/material';
 import { ResizableBox } from 'react-resizable';
 import 'react-resizable/css/styles.css';
@@ -14,7 +14,6 @@ import ChatMessages from './ChatMessages';
  * @returns {JSX} renders Chat Window view.
  */
 function ChatWindow(props) {
-    const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
 
@@ -24,14 +23,14 @@ function ChatWindow(props) {
     };
 
     const handleSend = async (message) => {
-        const updatedMessages = [...messages, message];
+        const updatedMessages = [...props.messages, message];
 
-        setMessages(updatedMessages);
+        props.setMessages(updatedMessages);
         setLoading(true);
 
         setTimeout(() => {
             // eslint-disable-next-line no-shadow
-            setMessages((messages) => [
+            props.setMessages((messages) => [
                 ...messages,
                 {
                     role: 'assistant',
@@ -43,7 +42,7 @@ function ChatWindow(props) {
     };
 
     const handleReset = () => {
-        setMessages([
+        props.setMessages([
             {
                 role: 'assistant',
                 // eslint-disable-next-line max-len
@@ -62,15 +61,16 @@ function ChatWindow(props) {
     //   scrollToBottom();
     // }, [messages]);
 
-    useEffect(() => {
-        setMessages([
-            {
-                role: 'assistant',
-                // eslint-disable-next-line max-len
-                content: 'Hi there! I\'m Chatbot UI, an AI assistant. I can help you with things like answering questions, providing information, and helping with tasks. How can I help you?',
-            },
-        ]);
-    }, []);
+    // useEffect(() => {
+    //     props.setMessages([
+    //         {
+    //             role: 'assistant',
+    //             // eslint-disable-next-line max-len
+    //             content: 'Hi there! I\'m Chatbot UI, an AI assistant. I can help you with th
+    // ings like answering questions, providing information, and helping with tasks. How can I help you?',
+    //         },
+    //     ]);
+    // }, []);
 
     return (
 
@@ -99,31 +99,18 @@ function ChatWindow(props) {
                     }}
                 />
             )}
-            // handleStyles={{
-            //     left: {
-            //         backgroundColor: '#ccc', // Background color of the resize handle
-            //         width: '10px', // Width of the resize handle
-            //         cursor: 'ew-resize', // Cursor style when hovering over the resize handle
-            //     },
-            // }}
-            // onResize={handleResize}
         >
             <Container
                 maxWidth={false}
                 style={{
-                    // border: '1px solid #ddd',
                     padding: '6px',
                     paddingLeft: '0px',
-                    // marginBottom: '6px',
-                    // marginTop: '6px',
-                    // width: "100%",
                     height: '100vh',
-                    // position: "relative",
                 }}
             >
                 <Box
                     border={2}
-                    borderColor='grey.500'
+                    borderColor='#1f84a1'
                     borderRadius={5}
                     display='flex'
                     flexDirection='column'
@@ -170,7 +157,7 @@ function ChatWindow(props) {
                         justifyContent='flex-end'
                     >
                         <ChatMessages
-                            messages={messages}
+                            messages={props.messages}
                             loading={loading}
                             onSend={handleSend}
                             onReset={handleReset}

@@ -68,10 +68,6 @@ function ChatMessage(props) {
             >
                 <Typography>
                     <MuiMarkdown
-                        // Highlight={Highlight}
-                        // themes={themes}
-                        // prismTheme={themes.github}
-                        // hideLineNumbers
                         overrides={markdownOverrides}
                     >
                         {message.content}
