@@ -1,9 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { TextField, IconButton, Snackbar } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
-// eslint-disable-next-line require-jsdoc
+/**
+ * Renders Chat Input view..
+ * @param {JSON} props Parent pros.
+ * @returns {JSX} renders Chat Input view.
+ */
 function ChatInput(props) {
+    const { onSend } = props;
     const [content, setContent] = useState('');
     const [notificationOpen, setNotificationOpen] = useState(false);
     const textareaRef = useRef(null);
@@ -22,7 +28,7 @@ function ChatInput(props) {
             setNotificationOpen(true);
             return;
         }
-        props.onSend({ role: 'user', content });
+        onSend({ role: 'user', content });
         setContent('');
     };
 
@@ -75,11 +81,14 @@ function ChatInput(props) {
                     bottom: 0,
                     right: 0,
                     transform: 'translate(50%, 50%)',
-                    marginBottom: '200px', // Adjust as needed to position the notification next to the chat input
+                    marginBottom: '200px',
                 }}
             />
         </div>
     );
 }
 
+ChatInput.propTypes = {
+    onSend: PropTypes.func.isRequired,
+};
 export default ChatInput;

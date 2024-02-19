@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import { Box, Typography } from '@mui/material';
 import { MuiMarkdown } from 'mui-markdown';
 
@@ -56,9 +57,7 @@ function ChatMessage(props) {
             alignItems={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
         >
             <Box
-                // display="flex"
                 textAlign='left'
-                // alignItems={message.role === "assistant" ? "left" : "right"}
                 bgcolor={message.role === 'assistant' ? '#f9f9f9' : '#d1d1d1'}
                 color='black'
                 borderRadius='10px'
@@ -78,4 +77,10 @@ function ChatMessage(props) {
     );
 }
 
+ChatMessage.propTypes = {
+    message: PropTypes.shape({
+        role: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+    }).isRequired,
+};
 export default ChatMessage;

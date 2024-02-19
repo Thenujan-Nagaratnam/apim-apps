@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 import { Box } from '@mui/material';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
@@ -9,7 +10,6 @@ import ChatMessage from './ChatMessage';
  * @returns {JSX} renders Chat Messages view.
  */
 function ChatMessages(props) {
-    // eslint-disable-next-line react/prop-types
     const { messages, loading, onSend } = props;
     const messagesEndRef = useRef(null);
 
@@ -58,4 +58,9 @@ function ChatMessages(props) {
     );
 }
 
+ChatMessages.propTypes = {
+    messages: PropTypes.instanceOf(Array).isRequired,
+    loading: PropTypes.bool.isRequired,
+    onSend: PropTypes.func.isRequired,
+};
 export default ChatMessages;

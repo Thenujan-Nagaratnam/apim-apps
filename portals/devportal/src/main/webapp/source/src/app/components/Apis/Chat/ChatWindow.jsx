@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Container, Box, IconButton } from '@mui/material';
 import { ResizableBox } from 'react-resizable';
 import 'react-resizable/css/styles.css';
@@ -14,6 +15,9 @@ import ChatMessages from './ChatMessages';
  * @returns {JSX} renders Chat Window view.
  */
 function ChatWindow(props) {
+    const {
+        toggleChatbot, toggleClearChatbot, messages, setMessages,
+    } = props;
     const [loading, setLoading] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
 
@@ -23,14 +27,14 @@ function ChatWindow(props) {
     };
 
     const handleSend = async (message) => {
-        const updatedMessages = [...props.messages, message];
+        const updatedMessages = [...messages, message];
 
-        props.setMessages(updatedMessages);
+        setMessages(updatedMessages);
         setLoading(true);
 
         setTimeout(() => {
             // eslint-disable-next-line no-shadow
-            props.setMessages((messages) => [
+            setMessages((messages) => [
                 ...messages,
                 {
                     role: 'assistant',
@@ -42,7 +46,7 @@ function ChatWindow(props) {
     };
 
     const handleReset = () => {
-        props.setMessages([
+        setMessages([
             {
                 role: 'assistant',
                 // eslint-disable-next-line max-len
@@ -93,7 +97,6 @@ function ChatWindow(props) {
             handle={(
                 <span
                     style={{
-                        // backgroundColor: 'black',
                         width: '16px',
                         cursor: 'ew-resize',
                     }}
@@ -121,7 +124,6 @@ function ChatWindow(props) {
                         flexDirection='row'
                         justifyContent='space-between'
                         marginBottom={1}
-                        // padding={-2}
                     >
                         <IconButton
                             onClick={toggleFullScreen}
@@ -135,14 +137,14 @@ function ChatWindow(props) {
                         </IconButton>
                         <Box>
                             <IconButton
-                                onClick={props.toggleChatbot}
+                                onClick={toggleChatbot}
                                 style={{ alignSelf: 'flex-end', padding: '12px' }}
                             >
                                 <ExpandMoreTwoToneIcon fontSize='large' />
                             </IconButton>
 
                             <IconButton
-                                onClick={props.toggleChatbot}
+                                onClick={toggleClearChatbot}
                                 style={{ alignSelf: 'flex-end', padding: '18px' }}
                             >
                                 <CloseTwoToneIcon fontSize='medium' />
@@ -157,7 +159,7 @@ function ChatWindow(props) {
                         justifyContent='flex-end'
                     >
                         <ChatMessages
-                            messages={props.messages}
+                            messages={messages}
                             loading={loading}
                             onSend={handleSend}
                             onReset={handleReset}
@@ -169,4 +171,10 @@ function ChatWindow(props) {
     );
 }
 
+ChatWindow.propTypes = {
+    toggleChatbot: PropTypes.func.isRequired,
+    toggleClearChatbot: PropTypes.func.isRequired,
+    messages: PropTypes.instanceOf(Array).isRequired,
+    setMessages: PropTypes.func.isRequired,
+};
 export default ChatWindow;
