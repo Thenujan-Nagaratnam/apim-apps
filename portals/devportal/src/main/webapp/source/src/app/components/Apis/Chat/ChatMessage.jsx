@@ -63,7 +63,7 @@ function ChatMessage(props) {
                 borderRadius='10px'
                 px={3}
                 py={2}
-                style={{ maxWidth: '80%' }}
+                style={{ maxWidth: '80%', overflowX: 'auto' }}
             >
                 <Typography>
                     <MuiMarkdown

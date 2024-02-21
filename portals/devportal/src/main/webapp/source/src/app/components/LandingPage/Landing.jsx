@@ -85,7 +85,6 @@ function Landing(props) {
                     )}
                 </Grid>
             </div>
-            <AISearchAssistant />
             {parallaxActive && (
                 <div className={classes.fullWidthBack}>
                     <ParallaxScroll index={1} />
@@ -97,6 +96,7 @@ function Landing(props) {
                     <Contact />
                 </div>
             )}
+            <AISearchAssistant />
         </div>
     );
 }

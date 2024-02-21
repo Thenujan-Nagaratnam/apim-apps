@@ -47,7 +47,6 @@ import AuthManager from '../../data/AuthManager';
 import LanguageSelector from './Header/LanuageSelector';
 import GlobalNavBar from './Header/GlobalNavbar';
 import VerticalDivider from '../Shared/VerticalDivider';
-import AISearchAssistant from '../Apis/Chat/AISearchAssistant';
 
 const styles = (theme) => {
     const pageMaxWidth = theme.custom.page.style === 'fluid' ? 'none' : theme.custom.page.width;
@@ -605,7 +604,6 @@ class Layout extends React.Component {
                                                     </Grow>
                                                 )}
                                             </Popper>
-                                            <AISearchAssistant />
                                         </div>
                                     </>
                                 ) : (

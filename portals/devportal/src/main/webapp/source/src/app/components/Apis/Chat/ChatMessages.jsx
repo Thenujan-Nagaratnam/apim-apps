@@ -24,9 +24,11 @@ function ChatMessages(props) {
             <Box
                 display='flex'
                 flexDirection='column'
-                p={2}
+                p={0}
+                paddingLeft={2.5}
+                paddingRight={2.5}
                 overflow='auto'
-                maxHeight='calc(100vh - 200px)'
+                maxHeight='calc(100vh - 152px)'
             >
                 {messages.map((message, index) => (
                     // eslint-disable-next-line react/no-array-index-key

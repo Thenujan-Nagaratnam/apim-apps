@@ -7,6 +7,8 @@ import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone';
 import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import KeyboardDoubleArrowLeftTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowLeftTwoTone';
 import KeyboardDoubleArrowRightTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowRightTwoTone';
+import Tooltip from '@mui/material/Tooltip';
+import RestartAltTwoToneIcon from '@mui/icons-material/RestartAltTwoTone';
 import ChatMessages from './ChatMessages';
 
 /**
@@ -79,9 +81,9 @@ function ChatWindow(props) {
     return (
 
         <ResizableBox
-            width={isClicked ? window.innerWidth : 480}
+            width={isClicked ? window.innerWidth : window.innerWidth * 0.27}
             height={window.innerHeight}
-            minConstraints={[480, window.innerHeight]}
+            minConstraints={[window.innerWidth * 0.15, window.innerHeight]}
             maxConstraints={[window.innerWidth, window.innerHeight]}
             resizeHandles={['w']}
             style={{
@@ -92,7 +94,7 @@ function ChatWindow(props) {
                 display: 'flex',
                 justifyContent: 'flex-start',
                 flexDirection: 'row-reverse',
-
+                zIndex: 9999,
             }}
             handle={(
                 <span
@@ -114,27 +116,42 @@ function ChatWindow(props) {
                 <Box
                     border={2}
                     borderColor='#1f84a1'
-                    borderRadius={5}
+                    borderRadius={4}
                     display='flex'
                     flexDirection='column'
-                    style={{ height: '100%', backgroundColor: 'white' }} //  width: "100%",
+                    style={{
+                        height: '100%',
+                        background: '#ffffff',
+                    }}
                 >
                     <Box
                         display='flex'
                         flexDirection='row'
                         justifyContent='space-between'
-                        marginBottom={1}
+                        marginBottom={0}
+                        borderBottom={1}
+                        borderColor='#1f84a1'
                     >
-                        <IconButton
-                            onClick={toggleFullScreen}
-                            style={{ alignSelf: 'flex-end', padding: '12px' }}
-                        >
-                            {isClicked ? (
-                                <KeyboardDoubleArrowRightTwoToneIcon fontSize='large' />
-                            ) : (
-                                <KeyboardDoubleArrowLeftTwoToneIcon fontSize='large' />
-                            )}
-                        </IconButton>
+                        <Box>
+                            <IconButton
+                                onClick={toggleFullScreen}
+                                style={{ alignSelf: 'flex-end', padding: '12px' }}
+                            >
+                                {isClicked ? (
+                                    <KeyboardDoubleArrowRightTwoToneIcon fontSize='large' />
+                                ) : (
+                                    <KeyboardDoubleArrowLeftTwoToneIcon fontSize='large' />
+                                )}
+                            </IconButton>
+                            <Tooltip title='Reset Chat' placement='right'>
+                                <IconButton
+                                    onClick={handleReset}
+                                    style={{ alignSelf: 'flex-end', padding: '12px' }}
+                                >
+                                    <RestartAltTwoToneIcon fontSize='large' />
+                                </IconButton>
+                            </Tooltip>
+                        </Box>
                         <Box>
                             <IconButton
                                 onClick={toggleChatbot}
@@ -157,6 +174,8 @@ function ChatWindow(props) {
                         display='flex'
                         flexDirection='column'
                         justifyContent='flex-end'
+                        marginTop={0}
+                        padding={0}
                     >
                         <ChatMessages
                             messages={messages}

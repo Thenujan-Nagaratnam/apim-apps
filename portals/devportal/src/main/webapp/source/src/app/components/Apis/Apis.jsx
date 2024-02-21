@@ -17,13 +17,13 @@
  */
 
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import withStyles from '@mui/styles/withStyles';
 import CommonListing from './Listing/CommonListing';
 import TagCloudListing from './Listing/TagCloudListing';
 import Details from './Details/index';
 import { ResourceNotFound } from '../Base/Errors';
-
+import AISearchAssistant from './Chat/AISearchAssistant';
 /**
  * Default API Store overview page
  *
@@ -31,31 +31,38 @@ import { ResourceNotFound } from '../Base/Errors';
  */
 function Apis() {
     return (
-        <Switch>
-            <Route
-                exact
-                path='/api-groups'
-                render={(props) => (
-                    <TagCloudListing {...props} />)}
-            />
-            <Route
-                exact
-                path='/apis'
-                render={(props) => (
-                    <CommonListing {...props} />)}
-            />
-            <Route
-                path='/apis/search'
-                render={(props) => (
-                    <CommonListing {...props} />)}
-            />
-            <Route
-                path='/apis/:apiUuid/'
-                render={(props) => (
-                    <Details {...props} />)}
-            />
-            <Route component={ResourceNotFound} />
-        </Switch>
+        <>
+            <Switch>
+                <Route
+                    exact
+                    path='/api-groups'
+                    render={(props) => (
+                        <TagCloudListing {...props} />
+                    )}
+                />
+                <Route
+                    exact
+                    path='/apis'
+                    render={(props) => (
+                        <>
+                            <CommonListing {...props} />
+                            <AISearchAssistant />
+                        </>
+                    )}
+                />
+                <Route
+                    path='/apis/search'
+                    render={(props) => (
+                        <CommonListing {...props} />)}
+                />
+                <Route
+                    path='/apis/:apiUuid/'
+                    render={(props) => (
+                        <Details {...props} />)}
+                />
+                <Route component={ResourceNotFound} />
+            </Switch>
+        </>
     );
 }
 

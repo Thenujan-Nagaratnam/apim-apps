@@ -73,7 +73,7 @@ function ChatInput(props) {
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 open={notificationOpen}
-                autoHideDuration={1500}
+                autoHideDuration={500}
                 onClose={handleCloseNotification}
                 message='Please enter a message'
                 sx={{
