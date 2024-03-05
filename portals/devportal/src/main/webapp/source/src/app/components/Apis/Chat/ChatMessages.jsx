@@ -20,7 +20,7 @@ function ChatMessages(props) {
     useEffect(scrollToBottom, [messages]);
 
     return (
-        <Box display='flex' flexDirection='column'>
+        <Box display='flex' flexDirection='column' overflow='auto' maxHeight='100vh'>
             <Box
                 display='flex'
                 flexDirection='column'

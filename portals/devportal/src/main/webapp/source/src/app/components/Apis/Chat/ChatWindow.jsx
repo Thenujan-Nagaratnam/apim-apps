@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Box, IconButton } from '@mui/material';
-import { ResizableBox } from 'react-resizable';
 import API from 'AppData/api';
+import { Container, Box } from '@mui/material';
+import { ResizableBox } from 'react-resizable';
 import 'react-resizable/css/styles.css';
-import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone';
-import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
-import KeyboardDoubleArrowLeftTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowLeftTwoTone';
-import KeyboardDoubleArrowRightTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowRightTwoTone';
-import Tooltip from '@mui/material/Tooltip';
-import RestartAltTwoToneIcon from '@mui/icons-material/RestartAltTwoTone';
 import ChatMessages from './ChatMessages';
+import Header from './Header';
 
 /**
  * Renders Chat Messages view..
@@ -69,14 +64,23 @@ function ChatWindow(props) {
         apiCall('get chat history', 'getChatHistory');
     }, []);
 
+    useEffect(() => {
+        const clearChatHistory = setTimeout(() => {
+            apiCall('clear chat history', 'clearChat');
+        }, 600000);
+
+        return () => clearTimeout(clearChatHistory);
+    }, [messages]);
+
     return (
 
         <ResizableBox
             width={isClicked ? window.innerWidth : window.innerWidth * 0.27}
             height={window.innerHeight}
-            minConstraints={[window.innerWidth * 0.15, window.innerHeight]}
+            minConstraints={[window.innerWidth * 0.27, window.innerHeight]}
             maxConstraints={[window.innerWidth, window.innerHeight]}
             resizeHandles={['w']}
+            // overflow='auto'
             style={{
                 position: 'fixed',
                 top: 0,
@@ -93,11 +97,14 @@ function ChatWindow(props) {
                         width: '16px',
                         cursor: 'ew-resize',
                     }}
-                />
+                >
+                    <svg />
+                </span>
             )}
         >
             <Container
                 maxWidth={false}
+                // overflow='auto'
                 style={{
                     padding: '6px',
                     paddingLeft: '0px',
@@ -109,60 +116,26 @@ function ChatWindow(props) {
                     borderColor='#1f84a1'
                     borderRadius={4}
                     display='flex'
+                    // overflow='auto'
                     flexDirection='column'
+                    justifyContent='flex-end'
                     style={{
                         height: '100%',
                         background: '#ffffff',
                     }}
                 >
-                    <Box
-                        display='flex'
-                        flexDirection='row'
-                        justifyContent='space-between'
-                        marginBottom={0}
-                        borderBottom={1}
-                        borderColor='#1f84a1'
-                    >
-                        <Box>
-                            <IconButton
-                                onClick={toggleFullScreen}
-                                style={{ alignSelf: 'flex-end', padding: '12px' }}
-                            >
-                                {isClicked ? (
-                                    <KeyboardDoubleArrowRightTwoToneIcon fontSize='large' />
-                                ) : (
-                                    <KeyboardDoubleArrowLeftTwoToneIcon fontSize='large' />
-                                )}
-                            </IconButton>
-                            <Tooltip title='Reset Chat' placement='right'>
-                                <IconButton
-                                    onClick={handleReset}
-                                    style={{ alignSelf: 'flex-end', padding: '12px' }}
-                                >
-                                    <RestartAltTwoToneIcon fontSize='large' />
-                                </IconButton>
-                            </Tooltip>
-                        </Box>
-                        <Box>
-                            <IconButton
-                                onClick={toggleChatbot}
-                                style={{ alignSelf: 'flex-end', padding: '12px' }}
-                            >
-                                <ExpandMoreTwoToneIcon fontSize='large' />
-                            </IconButton>
-
-                            <IconButton
-                                onClick={handleClear}
-                                style={{ alignSelf: 'flex-end', padding: '18px' }}
-                            >
-                                <CloseTwoToneIcon fontSize='medium' />
-                            </IconButton>
-                        </Box>
-                    </Box>
+                    <Header
+                        toggleChatbot={toggleChatbot}
+                        toggleFullScreen={toggleFullScreen}
+                        handleClear={handleClear}
+                        handleReset={handleReset}
+                        isClicked={isClicked}
+                    />
 
                     <Box
                         flexGrow={1}
                         display='flex'
+                        overflow='auto'
                         flexDirection='column'
                         justifyContent='flex-end'
                         marginTop={0}

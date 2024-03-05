@@ -332,6 +332,17 @@ export default class API extends Resource {
 
     /**
      * Get all comments for a particular API
+     * @param query nlquery from the user
+     * @param action action to be performed
+     */
+    getAisearchassistant(query, action) {
+        return this.client.then((client) => {
+            return client.apis.APIs.getAisearchassistant({ query, action }, this._requestMetaData());
+        });
+    }
+
+    /**
+     * Get all comments for a particular API
      * @param apiId api id of the api to which the comment is added
      */
     getAllComments(apiId, limit, offset) {

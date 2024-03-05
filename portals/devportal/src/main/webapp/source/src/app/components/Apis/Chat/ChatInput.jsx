@@ -37,6 +37,10 @@ function ChatInput(props) {
             e.preventDefault();
             handleSend();
         }
+        if (e.keyCode === 13 && e.shiftKey) {
+            e.preventDefault();
+            setContent(`${content}\n`);
+        }
     };
 
     const handleCloseNotification = () => {
@@ -60,7 +64,7 @@ function ChatInput(props) {
                 fullWidth
                 multiline
                 size='small'
-                maxRows={2}
+                maxRows={12}
                 InputProps={{
                     style: { borderRadius: 20 },
                     endAdornment: (
