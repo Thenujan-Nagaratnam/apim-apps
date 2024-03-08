@@ -33,6 +33,7 @@ export default class API extends Resource {
         super();
         this.client = new APIClientFactory().getAPIClient(Utils.getEnvironment().label).client;
         this.wsdlClient = new Wsdl(this.client);
+        // eslint-disable-next-line no-underscore-dangle
         this._requestMetaData = Resource._requestMetaData;
     }
 
@@ -327,17 +328,6 @@ export default class API extends Resource {
                 { requestBody: comment },
                 this._requestMetaData()
             );
-        });
-    }
-
-    /**
-     * Get all comments for a particular API
-     * @param query nlquery from the user
-     * @param action action to be performed
-     */
-    getAisearchassistant(query, action) {
-        return this.client.then((client) => {
-            return client.apis.APIs.getAisearchassistant({ query, action }, this._requestMetaData());
         });
     }
 
@@ -772,14 +762,17 @@ export default class API extends Resource {
         });
     }
 
-    /**
-     * Get API recommendations for a given user.
-     * @param {string} userId The username.
-     * @return {Promise}
-     * */
-    getAisearchassistant(query, action) {
+    // /**
+    //  * Get API recommendations for a given user.
+    //  * @param {string} userId The username.
+    //  * @return {Promise}
+    //  * */
+    // eslint-disable-next-line no-dupe-class-members, require-jsdoc
+    getAisearchassistant(query, action, tenantDomain) {
+        // it doesnt matter what name you have here, it is somehow automatically get the tenantDomian from the call
+        // console.log('tenantDomainweee', tenantDomain);
         const promiseGet = this.client.then((client) => {
-            return client.apis.APIs.getAisearchassistant(query, action, this._requestMetaData());
+            return client.apis.APIs.getAisearchassistant(query, action, tenantDomain, this._requestMetaData());
         });
         return promiseGet;
     }

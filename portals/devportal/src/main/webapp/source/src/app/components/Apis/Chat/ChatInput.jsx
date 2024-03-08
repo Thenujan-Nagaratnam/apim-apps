@@ -1,7 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@mui/styles';
 import { TextField, IconButton, Snackbar } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+
+const useStyles = makeStyles(() => ({
+    button: {
+        '&:hover': {
+            backgroundColor: '#0fa2db', // Disable hover effect
+        },
+    },
+}));
 
 /**
  * Renders Chat Input view..
@@ -13,6 +22,7 @@ function ChatInput(props) {
     const [content, setContent] = useState('');
     const [notificationOpen, setNotificationOpen] = useState(false);
     const textareaRef = useRef(null);
+    const classes = useStyles();
 
     const handleChange = (e) => {
         const { value } = e.target;
@@ -66,9 +76,22 @@ function ChatInput(props) {
                 size='small'
                 maxRows={12}
                 InputProps={{
-                    style: { borderRadius: 20 },
+                    style: {
+                        borderRadius: 20, padding: 14, backgroundColor: '#f9f9f9',
+                    },
                     endAdornment: (
-                        <IconButton onClick={handleSend} size='small'>
+                        // eslint-disable-next-line max-len
+                        <IconButton
+                            className={classes.button}
+                            onClick={handleSend}
+                            size='small'
+                            sx={{
+                                marginRight: '0px',
+                                width: '40px',
+                                backgroundColor: '#0fa2db',
+                                borderRadius: '6px',
+                            }}
+                        >
                             <SendIcon />
                         </IconButton>
                     ),
@@ -85,7 +108,7 @@ function ChatInput(props) {
                     bottom: 0,
                     right: 0,
                     transform: 'translate(50%, 50%)',
-                    marginBottom: '200px',
+                    marginBottom: '300px',
                 }}
             />
         </div>

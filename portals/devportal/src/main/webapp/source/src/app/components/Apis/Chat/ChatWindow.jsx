@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import API from 'AppData/api';
+import Api from 'AppData/api';
 import { Container, Box } from '@mui/material';
 import { ResizableBox } from 'react-resizable';
 import 'react-resizable/css/styles.css';
@@ -14,8 +14,9 @@ import Header from './Header';
  */
 function ChatWindow(props) {
     const {
-        toggleChatbot, toggleClearChatbot, messages, setMessages,
+        toggleChatbot, toggleClearChatbot, messages, setMessages, tenantDomain,
     } = props;
+    // const { api } = useContext(ApiContext);
     const [loading, setLoading] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
 
@@ -24,17 +25,11 @@ function ChatWindow(props) {
         setIsClicked(!isClicked);
     };
 
-    /**
-    * API call to send query or get/clear chat History
-    * @param {string} query - User query.
-    * @param {string} action - Action to be performed.
-    * @returns {Promise}.
-    */
     const apiCall = (query, action) => {
-        setLoading(true);
-        const restApi = new API();
+        // setLoading(true);
+        const restApi = new Api();
         return restApi
-            .getAisearchassistant({ query, action })
+            .getAisearchassistant({ query, action, tenantDomain })
             .then((result) => {
                 setMessages(result.body.messages);
                 return result.body.messages;
@@ -53,6 +48,7 @@ function ChatWindow(props) {
     };
 
     const handleSend = async (message) => {
+        setMessages([...messages, { role: 'user', content: message.content }]);
         apiCall(message.content, 'chat');
     };
 
@@ -61,10 +57,13 @@ function ChatWindow(props) {
     };
 
     useEffect(() => {
-        apiCall('get chat history', 'getChatHistory');
+        if (tenantDomain) {
+            apiCall('get chat history', 'getChatHistory');
+        }
     }, []);
 
     useEffect(() => {
+        console.log('messages', messages);
         const clearChatHistory = setTimeout(() => {
             apiCall('clear chat history', 'clearChat');
         }, 600000);
@@ -75,15 +74,15 @@ function ChatWindow(props) {
     return (
 
         <ResizableBox
-            width={isClicked ? window.innerWidth : window.innerWidth * 0.27}
+            width={isClicked ? window.innerWidth : Math.max(window.innerWidth * 0.25, 500)}
             height={window.innerHeight}
-            minConstraints={[window.innerWidth * 0.27, window.innerHeight]}
+            minConstraints={[Math.max(window.innerWidth * 0.25, 500), 700]}
             maxConstraints={[window.innerWidth, window.innerHeight]}
-            resizeHandles={['w']}
-            // overflow='auto'
+            resizeHandles={['nw']}
+            // margin={20}
             style={{
                 position: 'fixed',
-                top: 0,
+                // top: 0,
                 bottom: 0,
                 right: 0,
                 display: 'flex',
@@ -95,7 +94,7 @@ function ChatWindow(props) {
                 <span
                     style={{
                         width: '16px',
-                        cursor: 'ew-resize',
+                        cursor: 'move',
                     }}
                 >
                     <svg />
@@ -104,24 +103,26 @@ function ChatWindow(props) {
         >
             <Container
                 maxWidth={false}
-                // overflow='auto'
                 style={{
-                    padding: '6px',
                     paddingLeft: '0px',
-                    height: '100vh',
+                    paddingRight: '0px',
+                    backgroundColor: '#ffffff',
+                    height: '100vh - 120px',
+                    border: '10px',
+                    borderColor: '#1f84a1',
+                    boxShadow: '0 12px 32px rgba(0,0,0,0.3)',
+                    borderRadius: '28px',
+                    marginTop: '8px',
+                    marginBottom: '8px',
                 }}
             >
                 <Box
-                    border={2}
-                    borderColor='#1f84a1'
-                    borderRadius={4}
                     display='flex'
-                    // overflow='auto'
                     flexDirection='column'
-                    justifyContent='flex-end'
+                    justifyContent='flex'
+                    // marginLeft='100px'
                     style={{
                         height: '100%',
-                        background: '#ffffff',
                     }}
                 >
                     <Header
@@ -136,6 +137,7 @@ function ChatWindow(props) {
                         flexGrow={1}
                         display='flex'
                         overflow='auto'
+                        // marginLeft='100px'
                         flexDirection='column'
                         justifyContent='flex-end'
                         marginTop={0}

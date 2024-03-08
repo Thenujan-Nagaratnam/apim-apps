@@ -46,13 +46,14 @@ function ChatMessages(props) {
             </Box>
 
             <Box
-                mb={1.5}
+                mb={4}
                 ml={2.5}
                 mr={2.5}
                 mt={2.5}
                 position='relative'
-                bottom={8}
+                // bottom={8}
                 left={0}
+                // style={{ marginLeft: '10%', marginRight: '10%' }}
             >
                 <ChatInput onSend={onSend} />
             </Box>

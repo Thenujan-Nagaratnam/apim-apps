@@ -1,6 +1,8 @@
 /* eslint-disable no-shadow */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
+import Settings from 'Settings';
+import queryString from 'query-string';
 import ChatBotIcon from './ChatIcon';
 import ChatWindow from './ChatWindow';
 
@@ -9,6 +11,7 @@ function AISearchAssistant() {
     const [showChatbot, setShowChatbot] = useState(true);
     const [messages, setMessages] = useState([]);
     const [chatbotDisabled, setChatbotDisabled] = useState(false);
+    const [tenantDomain, setTenantDomain] = useState('carbon');
 
     const toggleChatbot = () => {
         setShowChatbot(!showChatbot);
@@ -22,6 +25,23 @@ function AISearchAssistant() {
     const handleDisableChatbot = () => {
         setChatbotDisabled(true);
     };
+
+    useEffect(() => {
+        const { app: { customUrl: { tenantDomain: customUrlEnabledDomain } } } = Settings;
+        let tenantID = '';
+        if (customUrlEnabledDomain !== 'null') {
+            tenantID = customUrlEnabledDomain;
+        } else {
+            const { location } = window;
+            if (location) {
+                const { tenant } = queryString.parse(location.search);
+                if (tenant) {
+                    tenantID = tenant;
+                }
+            }
+        }
+        setTenantDomain(tenantID);
+    }, []);
 
     let content;
 
@@ -40,6 +60,7 @@ function AISearchAssistant() {
                 toggleClearChatbot={toggleClearChatbot}
                 messages={messages}
                 setMessages={setMessages}
+                tenantDomain={tenantDomain}
             />
         );
     }
