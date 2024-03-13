@@ -772,9 +772,20 @@ export default class API extends Resource {
         // it doesnt matter what name you have here, it is somehow automatically get the tenantDomian from the call
         // console.log('tenantDomainweee', tenantDomain);
         const promiseGet = this.client.then((client) => {
-            return client.apis.APIs.getAisearchassistant(query, action, tenantDomain, this._requestMetaData());
+            return client.apis.APIs.get_apis_chat(query, action, tenantDomain, this._requestMetaData());
         });
         return promiseGet;
+    }
+
+    // eslint-disable-next-line no-dupe-class-members, require-jsdoc
+    postAisearchassistant(query, action, tenantDomain, chatHistory) {
+        console.log(chatHistory);
+        const messages = { messages: chatHistory };
+        return this.client.then((client) => {
+            const payload = { requestBody: messages };
+            const args = { 'Content-Type': 'application/json' };
+            return client.apis.APIs.post_apis_chat({ query, action, tenantDomain }, payload, args);
+        });
     }
 
     /**

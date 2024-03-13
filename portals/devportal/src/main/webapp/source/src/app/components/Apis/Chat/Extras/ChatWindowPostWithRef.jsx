@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Api from 'AppData/api';
 import { Container, Box } from '@mui/material';
@@ -15,8 +15,9 @@ import Header from './Header';
  */
 function ChatWindow(props) {
     const {
-        toggleChatbot, toggleClearChatbot, messages, setMessages, tenantDomain,
+        toggleChatbot, toggleClearChatbot, messages, setMessages, tenantDomain, introMessage,
     } = props;
+
     const [loading, setLoading] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
     const responseRef = useRef([]);
@@ -27,17 +28,20 @@ function ChatWindow(props) {
     };
 
     const apiCall = (query, action) => {
-        console.log(action, query);
         setLoading(true);
         const restApi = new Api();
         return restApi
-            .getAisearchassistant({ query, action, tenantDomain })
+            .postAisearchassistant(
+                query, action, tenantDomain, messages,
+            )
             .then((result) => {
-                responseRef.current = result.body.messages;
-                setMessages(result.body.messages);
-                return result.body.messages;
+                responseRef.current = [...responseRef.current, { role: 'assistant', content: result.body.content }];
+                setMessages(responseRef.current);
+                return result.body;
             })
             .catch((error) => {
+                responseRef.current = [...responseRef.current, { role: 'assistant', content: 'Sorry, Something went wrong!' }];
+                setMessages(responseRef.current);
                 throw error;
             })
             .finally(() => {
@@ -46,111 +50,24 @@ function ChatWindow(props) {
     };
 
     const handleClear = () => {
-        apiCall('clear chat history', 'clearChat');
+        setMessages([introMessage]);
         toggleClearChatbot();
-    };
-
-    // eslint-disable-next-line no-unused-vars
-    const sseCall = (message) => {
-        const query = {
-            message: message.content,
-            tenant: 'carbon.super',
-        };
-        // Make a POST request to the FastAPI endpoint
-        fetch('http://localhost:8000/chat/sse', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(query),
-        })
-            .then((response) => {
-            // Check if the response is a streaming response
-                if (!response.body || !response.body.pipeTo) {
-                    throw new Error('ReadableStream not available');
-                }
-
-                const reader = response.body.getReader();
-
-                let stream = '';
-
-                const processStream = async () => {
-                    try {
-                        while (true) {
-                            // eslint-disable-next-line no-await-in-loop
-                            const { done, value } = await reader.read();
-
-                            if (done) {
-                                // console.log('Stream complete');
-                                break;
-                            }
-
-                            const streamData = new TextDecoder().decode(value);
-                            // console.log('streamData', streamData);
-
-                            const jsonDataFragments = streamData.trim().split('}{');
-
-                            // eslint-disable-next-line no-loop-func
-                            jsonDataFragments.map((fragment, index) => {
-                                if ((jsonDataFragments.length) > 1) {
-                                    if (index === 0) {
-                                        fragment += '}';
-                                    } else if (index === jsonDataFragments.length - 1) {
-                                        fragment = '{' + fragment;
-                                    } else {
-                                        fragment = '{' + fragment + '}';
-                                    }
-                                }
-                                const jsonData1 = JSON.parse(fragment);
-                                if (jsonData1.type === 'start') {
-                                    responseRef.current = [...responseRef.current, { role: 'assistant', content: '' }];
-                                }
-                                stream += jsonData1.value;
-                                return jsonData1;
-                            });
-
-                            responseRef.current = [...responseRef.current.slice(0, -1), { role: 'assistant', content: stream }];
-
-                            setMessages(responseRef.current);
-                        }
-                    } catch (error) {
-                        console.error('Error while reading stream:', error);
-                        // eslint-disable-next-line max-len
-                        responseRef.current = [...responseRef.current.slice(0, -1), { role: 'assistant', content: 'Sorry, Something went wrong!' }];
-                    }
-                };
-
-                processStream();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
     };
 
     const handleSend = async (message) => {
         responseRef.current = [...responseRef.current, { role: 'user', content: message.content }];
         setMessages(responseRef.current);
-        sseCall(message);
+        apiCall(message.content, 'chat');
     };
 
     const handleReset = () => {
-        apiCall('clear chat history', 'clearChat');
+        responseRef.current = [introMessage];
+        setMessages([introMessage]);
     };
 
     useEffect(() => {
-        if (tenantDomain) {
-            apiCall('get chat history', 'getChatHistory');
-        }
+        responseRef.current = messages;
     }, []);
-
-    useEffect(() => {
-        // console.log('messages', messages);
-        const clearChatHistory = setTimeout(() => {
-            apiCall('clear chat history', 'clearChat');
-        }, 6000000);
-
-        return () => clearTimeout(clearChatHistory);
-    }, [messages]);
 
     return (
 
@@ -191,8 +108,8 @@ function ChatWindow(props) {
                     height: '100vh - 120px',
                     border: '10px',
                     borderColor: '#1f84a1',
-                    boxShadow: '0 12px 32px rgba(0,0,0,0.3)',
-                    borderRadius: '6px',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                    borderRadius: '8px',
                     marginTop: '8px',
                     marginBottom: '8px',
                     marginRight: '8px',

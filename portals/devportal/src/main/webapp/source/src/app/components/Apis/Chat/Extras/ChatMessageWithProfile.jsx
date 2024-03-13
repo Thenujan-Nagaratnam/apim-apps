@@ -1,7 +1,10 @@
 import React, { useRef } from 'react';
 import { PropTypes } from 'prop-types';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Icon } from '@mui/material';
 import { MuiMarkdown } from 'mui-markdown';
+import PersonIcon from '@mui/icons-material/Person';
+import ChatIcon from '@mui/icons-material/Chat';
+// import Fab from '@mui/material/Fab';
 
 /**
  * Renders a single Chat Message view..
@@ -53,9 +56,41 @@ function ChatMessage(props) {
     return (
         <Box
             display='flex'
-            flexDirection='column'
-            alignItems={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
+            flexDirection='row'
+            maxWidth='100%'
+            justifyContent={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
+            marginLeft='1%'
+            marginRight='1%'
         >
+            { (message.role === 'assistant') && (
+                // <Fab
+                //     color='primary'
+                //     variant='round'
+                //     padding='0px'
+                // >
+                //     <ChatIcon fontSize='medium' />
+                // </Fab>
+                // <div style={{
+                //     width: '40px',
+                //     height: '40px',
+                //     borderRadius: '50%',
+                //     backgroundColor: '#1f84a1',
+                //     border: '1px solid #1f84a1',
+                //     alignItems: 'center',
+                //     justifyContent: 'center',
+                //     display: 'flex',
+                // }}
+                // >
+                //     <ChatIcon fontSize='medium' />
+                // </div>
+                <Icon
+                    style={{
+                        alignSelf: 'flex', padding: '12px', borderRadius: '50%', borderWeight: '1px', borderColor: '#1f84a1',
+                    }}
+                >
+                    <ChatIcon fontSize='medium' />
+                </Icon>
+            )}
             <Box
                 ref={outerBoxRef}
                 textAlign='left'
@@ -70,8 +105,8 @@ function ChatMessage(props) {
                     overflowX: 'auto',
                     wordWrap: 'break-word',
                     whiteSpace: 'pre-wrap',
-                    marginLeft: '5%',
-                    marginRight: '5%',
+                    // marginLeft: '5%',
+                    // marginRight: '5%',
                 }}
             >
                 <Typography>
@@ -82,6 +117,15 @@ function ChatMessage(props) {
                     </MuiMarkdown>
                 </Typography>
             </Box>
+            { (message.role === 'user') && (
+                <Icon
+                    style={{
+                        alignSelf: 'flex', padding: '12px',
+                    }}
+                >
+                    <PersonIcon fontSize='large' />
+                </Icon>
+            )}
         </Box>
     );
 }

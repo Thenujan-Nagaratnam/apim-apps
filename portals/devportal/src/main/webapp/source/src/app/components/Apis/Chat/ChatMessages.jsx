@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Box } from '@mui/material';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
+import Loader from './Loader';
 
 /**
  * Renders Chat Messages view..
@@ -20,42 +21,68 @@ function ChatMessages(props) {
     useEffect(scrollToBottom, [messages]);
 
     return (
-        <Box display='flex' flexDirection='column' overflow='auto' maxHeight='100vh'>
+        <Box
+            maxHeight='100%'
+            display='flex'
+            overflow='auto'
+            flexDirection='column'
+            maxWidth='100%'
+            justifyContent='flex-end'
+        >
             <Box
                 display='flex'
-                flexDirection='column'
-                p={0}
-                paddingLeft={2.5}
-                paddingRight={2.5}
+                justifyContent='center'
                 overflow='auto'
-                maxHeight='calc(100vh - 152px)'
+                maxWidth='100%'
             >
-                {messages.map((message, index) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <Box key={index} my={1}>
-                        <ChatMessage message={message} />
-                    </Box>
-                ))}
+                <Box
+                    justifyContent='center'
+                    maxWidth='1080px'
+                    width='100%'
+                >
+                    {messages.map((message, index) => (
+                        // eslint-disable-next-line react/no-array-index-key
+                        <Box key={index} my={1}>
+                            <ChatMessage message={message} />
+                        </Box>
+                    ))}
 
-                {loading && (
-                    <Box my={1}>
-                        <div>Loading...</div>
-                    </Box>
-                )}
-                <div ref={messagesEndRef} />
+                    {loading && (
+                        <Box
+                            textAlign='left'
+                            bgcolor='#f9f9f9'
+                            color='black'
+                            borderRadius='10px'
+                            px={3}
+                            py={2.5}
+                            style={{
+                                maxWidth: '30px',
+                                marginLeft: '5%',
+                                marginRight: '5%',
+                            }}
+                        >
+                            <Loader />
+                        </Box>
+                    )}
+                    <div ref={messagesEndRef} />
+                </Box>
             </Box>
 
             <Box
-                mb={4}
-                ml={2.5}
-                mr={2.5}
-                mt={2.5}
-                position='relative'
-                // bottom={8}
-                left={0}
-                // style={{ marginLeft: '10%', marginRight: '10%' }}
+                display='flex'
+                justifyContent='center'
+                maxWidth='100%'
             >
-                <ChatInput onSend={onSend} />
+                <Box
+                    mb={4}
+                    ml={2.5}
+                    mr={2.5}
+                    mt={2.5}
+                    width='90%'
+                    maxWidth='1080px'
+                >
+                    <ChatInput onSend={onSend} />
+                </Box>
             </Box>
         </Box>
     );
