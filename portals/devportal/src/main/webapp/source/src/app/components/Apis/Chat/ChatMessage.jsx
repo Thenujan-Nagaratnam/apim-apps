@@ -59,7 +59,7 @@ function ChatMessage(props) {
             <Box
                 ref={outerBoxRef}
                 textAlign='left'
-                bgcolor={message.role === 'assistant' ? '#f9f9f9' : '#7FC7D9'}
+                bgcolor={message.role === 'assistant' ? '#f9f9f9' : '#e1e2e3'}
                 color='black'
                 borderRadius='10px'
                 px={3}

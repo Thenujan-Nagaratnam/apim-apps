@@ -98,7 +98,7 @@ function ChatWindow(props) {
         bgcolor: 'background.paper',
         border: '1px solid #000',
         boxShadow: 24,
-        backgroundColor: '#ffffff',
+        backgroundColor: '##91959c',
         p: 4,
     };
 
@@ -141,7 +141,7 @@ function ChatWindow(props) {
                 style={{
                     paddingLeft: '0px',
                     paddingRight: '0px',
-                    backgroundColor: '#ffffff',
+                    backgroundColor: '#fff',
                     height: '100vh - 120px',
                     border: '10px',
                     borderColor: '#1f84a1',

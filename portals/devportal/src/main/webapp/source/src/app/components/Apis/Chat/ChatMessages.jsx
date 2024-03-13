@@ -63,7 +63,7 @@ function ChatMessages(props) {
                             </Icon>
                             <Box
                                 textAlign='left'
-                                bgcolor='#f9f9f9'
+                                bgcolor='#fafafa'
                                 borderRadius='10px'
                                 px={3}
                                 py={2.5}
@@ -83,11 +83,10 @@ function ChatMessages(props) {
                 display='flex'
                 justifyContent='center'
                 maxWidth='100%'
+                backgroundColor='#fff'
             >
                 <Box
                     mb={4}
-                    ml={2.5}
-                    mr={2.5}
                     mt={2.5}
                     width='90%'
                     maxWidth='1280px'
