@@ -56,11 +56,12 @@ function ChatMessage(props) {
     return (
         <Box
             display='flex'
-            flexDirection='row'
-            maxWidth='100%'
-            justifyContent={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
+            flexDirection='column'
+            // maxWidth='100%'
+            // justifyContent={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
             marginLeft='2%'
             marginRight='2%'
+            alignItems={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
         >
             { (message.role === 'assistant') && (
                 // <Fab
@@ -91,17 +92,29 @@ function ChatMessage(props) {
                     <ChatIcon fontSize='medium' />
                 </Icon>
             )}
+
+            { (message.role === 'user') && (
+                <Icon
+                    style={{
+                        alignSelf: 'flex-end', padding: '12px',
+                    }}
+                >
+                    <PersonIcon fontSize='large' />
+                </Icon>
+            )}
             <Box
                 ref={outerBoxRef}
                 textAlign='left'
+                // flexDirection='column'
                 bgcolor={message.role === 'assistant' ? '#f9f9f9' : '#7FC7D9'}
+                justifyContent={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
                 color='black'
                 borderRadius='10px'
                 px={3}
                 py={2}
                 overflow='auto'
                 style={{
-                    maxWidth: '80%',
+                    maxWidth: '100%',
                     overflowX: 'auto',
                     wordWrap: 'break-word',
                     whiteSpace: 'pre-wrap',
@@ -117,15 +130,6 @@ function ChatMessage(props) {
                     </MuiMarkdown>
                 </Typography>
             </Box>
-            { (message.role === 'user') && (
-                <Icon
-                    style={{
-                        alignSelf: 'flex', padding: '12px',
-                    }}
-                >
-                    <PersonIcon fontSize='large' />
-                </Icon>
-            )}
         </Box>
     );
 }

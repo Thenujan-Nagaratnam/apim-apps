@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { Box } from '@mui/material';
+import { Box, Icon } from '@mui/material';
+import ChatIcon from '@mui/icons-material/Chat';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import Loader from './Loader';
@@ -24,7 +25,6 @@ function ChatMessages(props) {
         <Box
             maxHeight='100%'
             display='flex'
-            overflow='auto'
             flexDirection='column'
             maxWidth='100%'
             justifyContent='flex-end'
@@ -37,7 +37,7 @@ function ChatMessages(props) {
             >
                 <Box
                     justifyContent='center'
-                    maxWidth='1080px'
+                    maxWidth='1400px'
                     width='100%'
                 >
                     {messages.map((message, index) => (
@@ -49,19 +49,30 @@ function ChatMessages(props) {
 
                     {loading && (
                         <Box
-                            textAlign='left'
-                            bgcolor='#f9f9f9'
-                            color='black'
-                            borderRadius='10px'
-                            px={3}
-                            py={2.5}
-                            style={{
-                                maxWidth: '30px',
-                                marginLeft: '5%',
-                                marginRight: '5%',
-                            }}
+                            display='flex'
+                            flexDirection='row'
+                            maxWidth='100%'
+                            justifyContent='flex-start'
                         >
-                            <Loader />
+                            <Icon
+                                style={{
+                                    alignSelf: 'flex', padding: '8px',
+                                }}
+                            >
+                                <ChatIcon fontSize='medium' />
+                            </Icon>
+                            <Box
+                                textAlign='left'
+                                bgcolor='#f9f9f9'
+                                borderRadius='10px'
+                                px={3}
+                                py={2.5}
+                                style={{
+                                    maxWidth: '30px',
+                                }}
+                            >
+                                <Loader />
+                            </Box>
                         </Box>
                     )}
                     <div ref={messagesEndRef} />
@@ -79,7 +90,9 @@ function ChatMessages(props) {
                     mr={2.5}
                     mt={2.5}
                     width='90%'
-                    maxWidth='1080px'
+                    maxWidth='1280px'
+                    marginLeft='5%'
+                    marginRight='5%'
                 >
                     <ChatInput onSend={onSend} />
                 </Box>
