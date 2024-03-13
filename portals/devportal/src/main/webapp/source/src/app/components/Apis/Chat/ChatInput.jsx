@@ -87,6 +87,7 @@ function ChatInput(props) {
                             size='small'
                             sx={{
                                 marginRight: '0px',
+                                marginLeft: '10px',
                                 width: '40px',
                                 backgroundColor: '#f9f9f0',
                                 borderRadius: '4px',

@@ -98,7 +98,7 @@ function ChatWindow(props) {
         bgcolor: 'background.paper',
         border: '1px solid #000',
         boxShadow: 24,
-        backgroundColor: '##91959c',
+        backgroundColor: '#91959c',
         p: 4,
     };
 

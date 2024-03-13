@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { Box, Icon } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
@@ -15,6 +15,17 @@ function ChatMessages(props) {
     const { messages, loading, onSend } = props;
     const messagesEndRef = useRef(null);
 
+    const style = {
+        width: '30px',
+        height: '30px',
+        borderRadius: '50%',
+        backgroundColor: '#567189',
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'flex',
+        margin: '10px 10px 10px 0px',
+    };
+
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
@@ -28,6 +39,7 @@ function ChatMessages(props) {
             flexDirection='column'
             maxWidth='100%'
             justifyContent='flex-end'
+            marginLeft='5%'
         >
             <Box
                 display='flex'
@@ -37,7 +49,7 @@ function ChatMessages(props) {
             >
                 <Box
                     justifyContent='center'
-                    maxWidth='1400px'
+                    maxWidth='1120px'
                     width='100%'
                 >
                     {messages.map((message, index) => (
@@ -50,23 +62,22 @@ function ChatMessages(props) {
                     {loading && (
                         <Box
                             display='flex'
-                            flexDirection='row'
-                            maxWidth='100%'
-                            justifyContent='flex-start'
+                            flexDirection='column'
+                            alignItems='flex-start'
                         >
-                            <Icon
-                                style={{
-                                    alignSelf: 'flex', padding: '8px',
-                                }}
-                            >
-                                <ChatIcon fontSize='medium' />
-                            </Icon>
+                            <Box display='flex' alignItems='center'>
+                                <div style={style}>
+                                    <ChatIcon fontSize='small' style={{ fill: '#fff', stroke: '#fff' }} />
+                                </div>
+                                <Typography variant='body1' style={{ fontWeight: 'bold', fontSize: '12pt' }}>Assistant</Typography>
+                            </Box>
                             <Box
                                 textAlign='left'
-                                bgcolor='#fafafa'
+                                bgcolor='#fff'
                                 borderRadius='10px'
+                                justifyContent='flex-start'
                                 px={3}
-                                py={2.5}
+                                marginLeft='18px'
                                 style={{
                                     maxWidth: '30px',
                                 }}
@@ -88,10 +99,9 @@ function ChatMessages(props) {
                 <Box
                     mb={4}
                     mt={2.5}
-                    width='90%'
-                    maxWidth='1280px'
-                    marginLeft='5%'
-                    marginRight='5%'
+                    width='100%'
+                    maxWidth='1100px'
+                    marginRight='4%'
                 >
                     <ChatInput onSend={onSend} />
                 </Box>

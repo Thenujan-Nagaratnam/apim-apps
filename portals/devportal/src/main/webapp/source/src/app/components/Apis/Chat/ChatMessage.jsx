@@ -2,6 +2,9 @@ import React, { useRef } from 'react';
 import { PropTypes } from 'prop-types';
 import { Box, Typography } from '@mui/material';
 import { MuiMarkdown } from 'mui-markdown';
+import PersonIcon from '@mui/icons-material/Person';
+import ChatIcon from '@mui/icons-material/Chat';
+// import Fab from '@mui/material/Fab';
 
 /**
  * Renders a single Chat Message view..
@@ -11,6 +14,17 @@ import { MuiMarkdown } from 'mui-markdown';
 function ChatMessage(props) {
     const { message } = props;
     const outerBoxRef = useRef(null);
+
+    const style = {
+        width: '30px',
+        height: '30px',
+        borderRadius: '50%',
+        backgroundColor: '#567189',
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'flex',
+        margin: '10px 10px 10px 0px',
+    };
 
     const markdownOverrides = {
         heading1: {
@@ -54,24 +68,39 @@ function ChatMessage(props) {
         <Box
             display='flex'
             flexDirection='column'
-            alignItems={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
+            alignItems='flex-start'
         >
+            { (message.role === 'assistant') && (
+                <Box display='flex' alignItems='center'>
+                    <div style={style}>
+                        <ChatIcon fontSize='small' style={{ fill: '#fff', stroke: '#fff' }} />
+                    </div>
+                    <Typography variant='body1' style={{ fontWeight: 'bold', fontSize: '12pt' }}>Assistant</Typography>
+                </Box>
+            )}
+
+            { (message.role === 'user') && (
+                <Box display='flex' alignItems='center'>
+                    <div style={style}>
+                        <PersonIcon fontSize='medium' style={{ fill: '#fff', stroke: '#fff' }} />
+                    </div>
+                    <Typography variant='body1' style={{ fontWeight: 'bold', fontSize: '12pt' }}>You</Typography>
+                </Box>
+            )}
             <Box
                 ref={outerBoxRef}
                 textAlign='left'
-                bgcolor={message.role === 'assistant' ? '#f9f9f9' : '#e1e2e3'}
+                justifyContent='flex-start'
                 color='black'
                 borderRadius='10px'
                 px={3}
-                py={2}
-                // overflow='auto'
+                overflow='auto'
                 style={{
                     maxWidth: '80%',
                     overflowX: 'auto',
                     wordWrap: 'break-word',
                     whiteSpace: 'pre-wrap',
-                    marginLeft: '5%',
-                    marginRight: '5%',
+                    marginLeft: '18px',
                 }}
             >
                 <Typography>
