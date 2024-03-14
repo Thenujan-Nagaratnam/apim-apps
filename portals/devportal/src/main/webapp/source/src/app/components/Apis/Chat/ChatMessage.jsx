@@ -4,7 +4,6 @@ import { Box, Typography } from '@mui/material';
 import { MuiMarkdown } from 'mui-markdown';
 import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
-// import Fab from '@mui/material/Fab';
 
 /**
  * Renders a single Chat Message view..
@@ -18,12 +17,12 @@ function ChatMessage(props) {
     const style = {
         width: '30px',
         height: '30px',
-        borderRadius: '50%',
         backgroundColor: '#567189',
         alignItems: 'center',
         justifyContent: 'center',
         display: 'flex',
         margin: '10px 10px 10px 0px',
+        borderRadius: message.role === 'assistant' ? '50% 50% 50% 0' : '50% 50% 50% 0',
     };
 
     const markdownOverrides = {
@@ -91,17 +90,17 @@ function ChatMessage(props) {
                 ref={outerBoxRef}
                 textAlign='left'
                 justifyContent='flex-start'
+                bgcolor={message.role === 'assistant' ? '#f9f9f9' : '#fff'}
                 color='black'
-                borderRadius='10px'
-                px={3}
+                borderRadius='8px'
+                px={2}
+                py={message.role === 'assistant' ? 2 : 0}
                 overflow='auto'
-                style={{
-                    maxWidth: '80%',
-                    overflowX: 'auto',
-                    wordWrap: 'break-word',
-                    whiteSpace: 'pre-wrap',
-                    marginLeft: '18px',
-                }}
+                maxWidth='84%'
+                overflowX='auto'
+                wordWrap='break-word'
+                whiteSpace='pre-wrap'
+                marginLeft='26px'
             >
                 <Typography>
                     <MuiMarkdown

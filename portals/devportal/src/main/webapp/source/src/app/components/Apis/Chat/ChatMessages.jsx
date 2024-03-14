@@ -37,18 +37,14 @@ function ChatMessages(props) {
             maxHeight='100%'
             display='flex'
             flexDirection='column'
-            maxWidth='100%'
-            justifyContent='flex-end'
             marginLeft='5%'
         >
             <Box
                 display='flex'
                 justifyContent='center'
                 overflow='auto'
-                maxWidth='100%'
             >
                 <Box
-                    justifyContent='center'
                     maxWidth='1120px'
                     width='100%'
                 >
@@ -93,15 +89,13 @@ function ChatMessages(props) {
             <Box
                 display='flex'
                 justifyContent='center'
-                maxWidth='100%'
-                backgroundColor='#fff'
             >
                 <Box
-                    mb={4}
-                    mt={2.5}
+                    mb={3.5}
+                    mt={1.5}
                     width='100%'
-                    maxWidth='1100px'
-                    marginRight='4%'
+                    maxWidth='1180px'
+                    marginRight='5%'
                 >
                     <ChatInput onSend={onSend} />
                 </Box>

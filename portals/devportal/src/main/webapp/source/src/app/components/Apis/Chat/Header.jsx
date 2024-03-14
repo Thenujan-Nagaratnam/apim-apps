@@ -32,14 +32,10 @@ function Header(props) {
             display='flex'
             flexDirection='row'
             justifyContent='space-between'
-            marginBottom={0}
+            // marginBottom={0}
             borderBottom={2}
             borderColor='#1f84a1'
-            borderRadius='28px 28px 0 0'
-            // backgroundColor='#096183'
-            // style={{
-            //     background: 'linear-gradient(to right, #096183, #3fb5e2)',
-            // }}
+            // borderRadius='28px 28px 0 0'
         >
             <Box>
                 <IconButton

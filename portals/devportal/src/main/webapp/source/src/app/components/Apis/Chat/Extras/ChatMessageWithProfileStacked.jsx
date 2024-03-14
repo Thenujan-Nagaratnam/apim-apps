@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { PropTypes } from 'prop-types';
-import { Box, Typography, Icon } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { MuiMarkdown } from 'mui-markdown';
 import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -14,6 +14,17 @@ import ChatIcon from '@mui/icons-material/Chat';
 function ChatMessage(props) {
     const { message } = props;
     const outerBoxRef = useRef(null);
+
+    const style = {
+        width: '30px',
+        height: '30px',
+        borderRadius: '50%',
+        backgroundColor: '#567189',
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'flex',
+        margin: '10px 10px 10px 0px',
+    };
 
     const markdownOverrides = {
         heading1: {
@@ -57,69 +68,39 @@ function ChatMessage(props) {
         <Box
             display='flex'
             flexDirection='column'
-            // maxWidth='100%'
-            // justifyContent={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
-            marginLeft='2%'
-            marginRight='2%'
-            alignItems={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
+            alignItems='flex-start'
         >
             { (message.role === 'assistant') && (
-                // <Fab
-                //     color='primary'
-                //     variant='round'
-                //     padding='0px'
-                // >
-                //     <ChatIcon fontSize='medium' />
-                // </Fab>
-                // <div style={{
-                //     width: '40px',
-                //     height: '40px',
-                //     borderRadius: '50%',
-                //     backgroundColor: '#1f84a1',
-                //     border: '1px solid #1f84a1',
-                //     alignItems: 'center',
-                //     justifyContent: 'center',
-                //     display: 'flex',
-                // }}
-                // >
-                //     <ChatIcon fontSize='medium' />
-                // </div>
-                <Icon
-                    style={{
-                        alignSelf: 'flex', padding: '12px',
-                    }}
-                >
-                    <ChatIcon fontSize='medium' />
-                </Icon>
+                <Box display='flex' alignItems='center'>
+                    <div style={style}>
+                        <ChatIcon fontSize='small' style={{ fill: '#fff', stroke: '#fff' }} />
+                    </div>
+                    <Typography variant='body1' style={{ fontWeight: 'bold', fontSize: '12pt' }}>Assistant</Typography>
+                </Box>
             )}
 
             { (message.role === 'user') && (
-                <Icon
-                    style={{
-                        alignSelf: 'flex-end', padding: '12px',
-                    }}
-                >
-                    <PersonIcon fontSize='large' />
-                </Icon>
+                <Box display='flex' alignItems='center'>
+                    <div style={style}>
+                        <PersonIcon fontSize='medium' style={{ fill: '#fff', stroke: '#fff' }} />
+                    </div>
+                    <Typography variant='body1' style={{ fontWeight: 'bold', fontSize: '12pt' }}>You</Typography>
+                </Box>
             )}
             <Box
                 ref={outerBoxRef}
                 textAlign='left'
-                // flexDirection='column'
-                bgcolor={message.role === 'assistant' ? '#f9f9f9' : '#7FC7D9'}
-                justifyContent={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
+                justifyContent='flex-start'
                 color='black'
                 borderRadius='10px'
                 px={3}
-                py={2}
                 overflow='auto'
                 style={{
-                    maxWidth: '100%',
+                    maxWidth: '80%',
                     overflowX: 'auto',
                     wordWrap: 'break-word',
                     whiteSpace: 'pre-wrap',
-                    // marginLeft: '5%',
-                    // marginRight: '5%',
+                    marginLeft: '18px',
                 }}
             >
                 <Typography>

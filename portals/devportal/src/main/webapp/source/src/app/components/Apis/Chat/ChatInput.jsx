@@ -77,7 +77,7 @@ function ChatInput(props) {
                 maxRows={12}
                 InputProps={{
                     style: {
-                        borderRadius: 8, padding: 14, backgroundColor: '#f9f9f9',
+                        borderRadius: 10, padding: 14,
                     },
                     endAdornment: (
                         // eslint-disable-next-line max-len
@@ -89,7 +89,7 @@ function ChatInput(props) {
                                 marginRight: '0px',
                                 marginLeft: '10px',
                                 width: '40px',
-                                backgroundColor: '#f9f9f0',
+                                // backgroundColor: '#f9f9f0',
                                 borderRadius: '4px',
                             }}
                         >
