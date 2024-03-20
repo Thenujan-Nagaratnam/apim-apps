@@ -31,6 +31,26 @@ function ChatWindow(props) {
     const pathName = window.location.pathname;
     const { search, origin } = window.location;
 
+    const [, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     const toggleFullScreen = (e) => {
         e.preventDefault();
         setIsClicked(!isClicked);
@@ -127,9 +147,9 @@ function ChatWindow(props) {
     return (
 
         <ResizableBox
-            width={isClicked ? window.innerWidth : Math.max(window.innerWidth * 0.25, 520)}
+            width={isClicked ? window.innerWidth : Math.max(window.innerWidth * 0.27, 520)}
             height={window.innerHeight - 110}
-            minConstraints={[Math.max(window.innerWidth * 0.25, 520), window.innerHeight]}
+            minConstraints={[Math.max(window.innerWidth * 0.27, 520), window.innerHeight]}
             maxConstraints={[window.innerWidth, window.innerHeight - 110]}
             resizeHandles={['w']}
             style={{
@@ -156,7 +176,7 @@ function ChatWindow(props) {
                 style={{
                     padding: 0,
                     backgroundColor: '#fff',
-                    border: '2px solid #1f84a1',
+                    border: '0.5px solid #0f0f0f',
                     boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
                     borderRadius: '8px',
                     margin: '4px 4px 4px 0',

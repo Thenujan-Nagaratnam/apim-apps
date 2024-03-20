@@ -73,7 +73,7 @@ function AISearchAssistant() {
         content = null;
     } else if (showChatbot) {
         content = (
-            <Box position='absolute' bottom={24} right={24}>
+            <Box position='absolute' bottom={24} right={100}>
                 <ChatBotIcon toggleChatbot={toggleChatbot} handleDisableChatbot={handleDisableChatbot} chatbotDisabled={chatbotDisabled} />
             </Box>
         );
