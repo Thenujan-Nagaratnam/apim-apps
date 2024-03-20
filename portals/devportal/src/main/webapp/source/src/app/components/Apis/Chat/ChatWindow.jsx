@@ -8,12 +8,10 @@ import {
 } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import { ResizableBox } from 'react-resizable';
-// import queryString from 'query-string';
 import 'react-resizable/css/styles.css';
 import ChatMessages from './ChatMessages';
 import Header from './Header';
 
-// import ErrorBox from './ErrorBox';
 /**
  * Renders Chat Messages view..
  * @param {JSON} props Parent pros.
@@ -40,35 +38,23 @@ function ChatWindow(props) {
 
     const apiCall = (query) => {
         setLoading(true);
-        console.log(query);
-        console.log(tenantDomain);
 
         const restApi = new Api();
         const messagesWithoutApis = messages.map(({ apis, ...message }) => message);
 
         return restApi
             .marketplaceChatExecute(
-                query, 'chat', tenantDomain, messagesWithoutApis,
+                query, tenantDomain, messagesWithoutApis,
             )
-            .then(() => {
-            // try {
-            //     responseRef.current = [...responseRef.current, { role: 'assistant', content: result.body.content.trim() }];
-            //     setMessages(responseRef.current);
-            //     return result.body;
-            // } catch (error) {
-            //     responseRef.current = [...responseRef.current, { role: 'assistant', content: 'Error occurred. Please try again later.' }];
-            //     setMessages(responseRef.current);
-            //     throw error;
-            // }
-
-                const apis = [{ id: 'e3d67198-eb8e-46f4-bb93-ef28385a8809', name: 'GramaCheckIdentityCheck-Endpoint7070' }, { id: 'e3d67198-eb8e-46f4-bb93-ef28385a8809', name: 'PoliceCheckAPIpvm-PoliceCheck' }, { id: 'e3d67198-eb8e-46f4-bb93-ef28385a8809', name: 'PizzaShackApi' }];
+            .then((result) => {
+                const { apis } = result.body;
 
                 const apiPaths = apis.map((api) => {
-                    return { apiPath: `${origin}${pathName}/${api.id}/overview${search}`, name: api.name };
+                    return { apiPath: `${origin}${pathName}/${api.apiId}/overview${search}`, name: api.apiName };
                 });
-                responseRef.current = [...responseRef.current, { role: 'assistant', content: "Hi, I'm your assistant. How can I help you?", apis: apiPaths }];
+                responseRef.current = [...responseRef.current, { role: 'assistant', content: result.body.response, apis: apiPaths }];
                 setMessages(responseRef.current);
-            //     return result.body;
+                return result.body;
             })
             .catch((error) => {
                 let content;
@@ -122,33 +108,33 @@ function ChatWindow(props) {
         responseRef.current = messages;
         setApisCount(5);
         setApiLimitExceeded(false);
-        // const restApi = new Api();
+        const restApi = new Api();
 
-        // return restApi
-        //     .getApiCount(tenantDomain)
-        //     .then((data) => {
-        //         const apis = parseInt(data, 10);
-        //         setApisCount(apis);
-        //         if (apis > 1000) {
-        //             setApiLimitExceeded(true);
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.error(error);
-        //     });
+        return restApi
+            .getMarketplaceChatApiCount()
+            .then((data) => {
+                const apis = parseInt(data.body.count, 10);
+                setApisCount(apis);
+                if (apis > 1000) {
+                    setApiLimitExceeded(true);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }, []);
 
     return (
 
         <ResizableBox
             width={isClicked ? window.innerWidth : Math.max(window.innerWidth * 0.25, 520)}
-            height={window.innerHeight}
+            height={window.innerHeight - 110}
             minConstraints={[Math.max(window.innerWidth * 0.25, 520), window.innerHeight]}
-            maxConstraints={[window.innerWidth, window.innerHeight]}
+            maxConstraints={[window.innerWidth, window.innerHeight - 110]}
             resizeHandles={['w']}
             style={{
                 position: 'fixed',
-                bottom: 0,
+                bottom: 48,
                 right: 0,
                 display: 'flex',
                 justifyContent: 'flex-start',
@@ -158,9 +144,9 @@ function ChatWindow(props) {
             handle={(
                 <span
                     style={{
-                        width: '16px',
+                        width: '4px',
                         cursor: 'ew-resize',
-                        minWidth: '16px',
+                        minWidth: '4px',
                     }}
                 />
             )}

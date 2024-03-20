@@ -762,28 +762,6 @@ export default class API extends Resource {
         });
     }
 
-    // eslint-disable-next-line no-dupe-class-members, require-jsdoc
-    marketplaceChatExecute(query, action, tenantDomain, chatHistory) {
-        console.log(this.client);
-        const messages = { messages: chatHistory };
-        return this.client.then((client) => {
-            const payload = { requestBody: messages };
-            const args = { 'Content-Type': 'application/json' };
-            return client.apis['Marketplace Chat'].marketplaceChatExecute({ query, action, tenantDomain }, payload, args);
-        });
-    }
-
-    // eslint-disable-next-line require-jsdoc
-    getMarketplaceChatApiCount() {
-        console.log(this.client);
-        // const messages = { messages: chatHistory };
-        return this.client.then((client) => {
-            // const payload = { requestBody: messages };
-            const args = { 'Content-Type': 'application/json' };
-            return client.apis['Marketplace Chat'].getMarketplaceChatApiCount({ query, action, tenantDomain }, payload, args);
-        });
-    }
-
     /**
      * Get API recommendations for a given user.
      * @param {string} userId The username.
@@ -871,5 +849,26 @@ export default class API extends Resource {
             return client.apis.Subscriptions.getAdditionalInfoOfAPISubscriptions(payload, this._requestMetaData());
         });
         return promiseAdditionalInfo;
+    }
+
+    // eslint-disable-next-line no-dupe-class-members, require-jsdoc
+    marketplaceChatExecute(query, tenant, chatHistory) {
+        const payload = {
+            message: query,
+            messageList: { messageList: chatHistory },
+            tenantDomain: tenant,
+        };
+        return this.client.then((client) => {
+            // eslint-disable-next-line max-len
+            return client.apis['Marketplace Chat'].marketplaceChatExecute({}, { requestBody: payload }, this._requestMetaData());
+        });
+    }
+
+    // eslint-disable-next-line require-jsdoc
+    getMarketplaceChatApiCount() {
+        console.log(this.client);
+        return this.client.then((client) => {
+            return client.apis['Marketplace Chat'].getMarketplaceChatApiCount(this._requestMetaData());
+        });
     }
 }

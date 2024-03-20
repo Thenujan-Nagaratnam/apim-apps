@@ -45,7 +45,7 @@ function ChatMessages(props) {
                 overflow='auto'
             >
                 <Box
-                    maxWidth='1120px'
+                    maxWidth='1320px'
                     width='100%'
                 >
                     {messages.map((message, index) => (
@@ -94,7 +94,7 @@ function ChatMessages(props) {
                     mb={3.5}
                     mt={1.5}
                     width='100%'
-                    maxWidth='1180px'
+                    maxWidth='1380px'
                     marginRight='5%'
                 >
                     <ChatInput onSend={onSend} />

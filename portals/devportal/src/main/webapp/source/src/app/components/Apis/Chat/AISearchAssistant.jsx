@@ -6,42 +6,18 @@ import Settings from 'Settings';
 import queryString from 'query-string';
 import ChatBotIcon from './ChatIcon';
 import ChatWindow from './ChatWindow';
-import Utils from './.../data/Utils'; // eslint-disable-next-line require-jsdoc
-import User from './.../data/User'; // eslint-disable-next-line require-jsdoc
 
 function AISearchAssistant() {
     const introMessage = {
         role: 'assistant',
         // eslint-disable-next-line max-len
-        content: 'Hi there! I\'m Chatbot UI, an AI assistant. I can help you with things like answering questions and providing information related to APIs. How can I help you?',
+        content: 'Hi there! I\'m Marketplace assistant. I can help you with finding APIs and providing information related to APIs. How can I help you?',
     };
     const getMessages = () => {
         const messagesJSON = localStorage.getItem('messages');
         const loadedMessages = JSON.parse(messagesJSON);
         return loadedMessages;
     };
-
-    const getUser = (environmentName = Utils.getCurrentEnvironment().label) => {
-        const userData = localStorage.getItem(`${User.CONST.LOCALSTORAGE_USER}_${environmentName}`);
-        const partialToken = Utils.getCookie(User.CONST.WSO2_AM_TOKEN_1, environmentName);
-        const refreshToken = Utils.getCookie(User.CONST.WSO2_AM_REFRESH_TOKEN_1, environmentName);
-
-        const isLoginCookie = Utils.getCookie('IS_LOGIN', 'DEFAULT');
-        if (isLoginCookie) {
-            Utils.deleteCookie('IS_LOGIN', Settings.app.context, 'DEFAULT');
-            localStorage.removeItem(`${User.CONST.LOCALSTORAGE_USER}_${environmentName}`);
-            return null;
-        }
-        if (!(userData && (partialToken || refreshToken))) {
-            return null;
-        }
-
-        return User.fromJson(JSON.parse(userData), environmentName);
-    };
-
-    const { name } = getUser();
-
-    console.log('User Name:', name);
 
     const [showChatbot, setShowChatbot] = useState(true);
     const [messages, setMessages] = useState(getMessages);
@@ -65,12 +41,12 @@ function AISearchAssistant() {
     useEffect(() => {
         try {
             const messagesJSON = localStorage.getItem('messages');
-            if (messagesJSON) {
-                const loadedMessages = JSON.parse(messagesJSON);
+            const loadedMessages = JSON.parse(messagesJSON);
+            if (loadedMessages) {
                 setMessages(loadedMessages);
             } else {
                 setMessages([introMessage]);
-                localStorage.setItem('messages', JSON.stringify(messages));
+                localStorage.setItem('messages', JSON.stringify([introMessage]));
             }
         } catch (error) {
             console.error('Error loading messages from localStorage:', error);

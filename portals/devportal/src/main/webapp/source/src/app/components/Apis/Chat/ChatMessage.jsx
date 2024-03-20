@@ -7,6 +7,9 @@ import {
 import { MuiMarkdown } from 'mui-markdown';
 import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
+import Settings from 'Settings';
+import User from 'AppData/User';
+import Utils from 'AppData/Utils';
 
 /**
  * Renders a single Chat Message view.
@@ -17,7 +20,27 @@ function ChatMessage(props) {
     const { message } = props;
     const outerBoxRef = useRef(null);
 
-    const style = {
+    const getUser = (environmentName = Utils.getCurrentEnvironment().label) => {
+        const userData = localStorage.getItem(`${User.CONST.LOCALSTORAGE_USER}_${environmentName}`);
+        const partialToken = Utils.getCookie(User.CONST.WSO2_AM_TOKEN_1, environmentName);
+        const refreshToken = Utils.getCookie(User.CONST.WSO2_AM_REFRESH_TOKEN_1, environmentName);
+
+        const isLoginCookie = Utils.getCookie('IS_LOGIN', 'DEFAULT');
+        if (isLoginCookie) {
+            Utils.deleteCookie('IS_LOGIN', Settings.app.context, 'DEFAULT');
+            localStorage.removeItem(`${User.CONST.LOCALSTORAGE_USER}_${environmentName}`);
+            return null;
+        }
+        if (!(userData && (partialToken || refreshToken))) {
+            return null;
+        }
+
+        return User.fromJson(JSON.parse(userData), environmentName);
+    };
+
+    const { name } = getUser();
+
+    const profileStyle = {
         width: '30px',
         height: '30px',
         backgroundColor: '#567189',
@@ -28,7 +51,7 @@ function ChatMessage(props) {
         borderRadius: message.role === 'assistant' ? '50% 50% 50% 0' : '50% 50% 50% 0',
     };
 
-    const style2 = {
+    const messageStyle = {
         textAlign: 'left',
         justifyContent: 'flex-start',
         backgroundColor: message.role === 'assistant' ? '#f9f9f9' : '#fff',
@@ -88,20 +111,20 @@ function ChatMessage(props) {
             alignItems='flex-start'
         >
             {message.role === 'assistant' && (
-                <Box display='flex-start' alignItems='center' flexDirection='column' maxWidth='100%'>
+                <Box display='flex-start' alignItems='center' flexDirection='column' width='90%'>
                     <Box display='flex' alignItems='center' width='100%'>
-                        <div style={style}>
+                        <div style={profileStyle}>
                             <ChatIcon fontSize='small' style={{ fill: '#fff', stroke: '#fff' }} />
                         </div>
                         <Typography variant='body1' style={{ fontWeight: 'bold', fontSize: '12pt' }}>Assistant</Typography>
                     </Box>
                     {message.apis && (
-                        <Box display='flex' flexDirection='row' flexWrap='wrap' marginLeft='26px' marginRight='16px' maxWidth='100%'>
+                        <Box display='flex' flexDirection='row' flexWrap='wrap' marginLeft='26px' marginRight='16px' width='100%'>
                             {message.apis.map((api, index) => (
                                 // eslint-disable-next-line max-len
                                 <a key={index} href={api.apiPath} target='_blank' rel='noopener noreferrer' style={{ textDecoration: 'none', color: 'inherit', width: '33%' }}>
                                     <Card style={{
-                                        margin: '0 10px 10px 0', minWidth: '130px', height: '56px', backgroundColor: '#f9f9f9',
+                                        margin: '0 10px 10px 0', width: '95%', height: '56px', backgroundColor: '#f9f9f9',
                                     }}
                                     >
                                         <CardContent style={{ wordWrap: 'break-word' }}>
@@ -129,15 +152,17 @@ function ChatMessage(props) {
 
             {message.role === 'user' && (
                 <Box display='flex' alignItems='center'>
-                    <div style={style}>
+                    <div style={profileStyle}>
                         <PersonIcon fontSize='medium' style={{ fill: '#fff', stroke: '#fff' }} />
                     </div>
-                    <Typography variant='body1' style={{ fontWeight: 'bold', fontSize: '12pt' }}>You</Typography>
+                    <Typography variant='body1' style={{ fontWeight: 'bold', fontSize: '12pt' }}>
+                        {name.charAt(0).toUpperCase() + name.slice(1)}
+                    </Typography>
                 </Box>
             )}
             <Box
                 style={{
-                    ...style2,
+                    ...messageStyle,
                     maxWidth: '84%',
                 }}
                 ref={outerBoxRef}
