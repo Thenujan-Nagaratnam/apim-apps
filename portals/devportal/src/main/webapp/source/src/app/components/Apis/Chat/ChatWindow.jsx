@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-param-reassign */
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Api from 'AppData/api';
@@ -36,21 +34,6 @@ function ChatWindow(props) {
         height: window.innerHeight,
     });
 
-    useEffect(() => {
-        const handleResize = () => {
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
-        };
-
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
     const toggleFullScreen = (e) => {
         e.preventDefault();
         setIsClicked(!isClicked);
@@ -85,9 +68,6 @@ function ChatWindow(props) {
                             break;
                         case 429: // Token limit exceeded
                             content = 'Token Limit is exceeded. Please try again later.';
-                            break;
-                        case 403: // No matching resource found
-                            content = 'No matching resource found. Please try again.';
                             break;
                         default:
                             content = 'Something went wrong Please try again later.';
@@ -126,8 +106,6 @@ function ChatWindow(props) {
 
     useEffect(() => {
         responseRef.current = messages;
-        setApisCount(5);
-        setApiLimitExceeded(false);
         const restApi = new Api();
 
         return restApi
@@ -144,12 +122,27 @@ function ChatWindow(props) {
             });
     }, []);
 
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     return (
 
         <ResizableBox
-            width={isClicked ? window.innerWidth : Math.max(window.innerWidth * 0.27, 520)}
+            width={isClicked ? window.innerWidth : 500}
             height={window.innerHeight - 110}
-            minConstraints={[Math.max(window.innerWidth * 0.27, 520), window.innerHeight]}
+            minConstraints={[500, window.innerHeight]}
             maxConstraints={[window.innerWidth, window.innerHeight - 110]}
             resizeHandles={['w']}
             style={{
@@ -176,8 +169,8 @@ function ChatWindow(props) {
                 style={{
                     padding: 0,
                     backgroundColor: '#fff',
-                    border: '2px solid #1f84a1',
-                    boxShadow: '0 2px 2px rgba(0,0,0,0.3)',
+                    border: '0px solid #808e96',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
                     borderRadius: '4px',
                     margin: '4px 4px 4px 0',
                 }}
@@ -185,7 +178,6 @@ function ChatWindow(props) {
                 <Box
                     display='flex'
                     flexDirection='column'
-                    // justifyContent='flex'
                     style={{
                         height: '100%',
                     }}
@@ -199,7 +191,6 @@ function ChatWindow(props) {
                     />
                     {apiLimitExceeded ? (
                         <Alert severity='warning' style={{ borderRadius: '0px', zIndex: 2999, padding: '0 10px 0 10px' }}>
-                            {/* <AlertTitle>Warning</AlertTitle> */}
                             You have reached your maximum number of apis. The answers will be limited to the first 1000 apis.
                         </Alert>
                     ) : (
@@ -214,8 +205,6 @@ function ChatWindow(props) {
                         overflow='auto'
                         flexDirection='column'
                         justifyContent='flex-end'
-                        marginTop={0}
-                        padding={0}
                     >
                         <ChatMessages
                             messages={messages}
@@ -236,5 +225,11 @@ ChatWindow.propTypes = {
     toggleClearChatbot: PropTypes.func.isRequired,
     messages: PropTypes.instanceOf(Array).isRequired,
     setMessages: PropTypes.func.isRequired,
+    tenantDomain: PropTypes.string.isRequired,
+    introMessage: PropTypes.shape({
+        role: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+    }).isRequired,
+    user: PropTypes.string.isRequired,
 };
 export default ChatWindow;

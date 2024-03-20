@@ -1,5 +1,3 @@
-/* eslint-disable require-jsdoc */
-/* eslint-disable no-shadow */
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import Settings from 'Settings';
@@ -9,6 +7,10 @@ import Utils from 'AppData/Utils';
 import ChatBotIcon from './ChatIcon';
 import ChatWindow from './ChatWindow';
 
+/**
+ * Renders AI Search Assistant view..
+ * @returns {JSX} renders Chat Icon view.
+ */
 function AISearchAssistant() {
     const introMessage = {
         role: 'assistant',

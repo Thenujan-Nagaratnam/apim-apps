@@ -101,7 +101,7 @@ function ChatMessage(props) {
                                 // eslint-disable-next-line max-len
                                 <a key={index} href={api.apiPath} target='_blank' rel='noopener noreferrer' style={{ textDecoration: 'none', color: 'inherit', width: '33%' }}>
                                     <Card style={{
-                                        margin: '0 10px 10px 0', width: '95%', height: '56px', backgroundColor: '#f9f9f9',
+                                        margin: '0 10px 10px 0', width: '95%', height: '56px', backgroundColor: '#40a4de',
                                     }}
                                     >
                                         <CardContent style={{ wordWrap: 'break-word' }}>

@@ -28,8 +28,8 @@ function Header(props) {
             display='flex'
             flexDirection='row'
             justifyContent='space-between'
-            borderBottom={2}
-            borderColor='#1f84a1'
+            borderBottom={1}
+            borderColor='#808e96'
         >
             <Box>
                 <IconButton

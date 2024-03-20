@@ -110,5 +110,6 @@ ChatMessages.propTypes = {
     messages: PropTypes.instanceOf(Array).isRequired,
     loading: PropTypes.bool.isRequired,
     onSend: PropTypes.func.isRequired,
+    user: PropTypes.string.isRequired,
 };
 export default ChatMessages;

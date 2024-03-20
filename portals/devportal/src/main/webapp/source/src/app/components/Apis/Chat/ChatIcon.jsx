@@ -61,7 +61,7 @@ function ChatBotIcon(props) {
                                 boxShadow: 'none',
                             }}
                         >
-                            <CloseIcon fontSize='medium' style={{ fill: '#c91a3a', stroke: '#8a1a2f' }} />
+                            <CloseIcon fontSize='medium' style={{ fill: '#000', stroke: '#000' }} />
                         </Fab>
                     </Tooltip>
                 )}
