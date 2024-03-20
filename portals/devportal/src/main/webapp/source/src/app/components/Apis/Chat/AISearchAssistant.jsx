@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import Settings from 'Settings';
 import queryString from 'query-string';
+import User from 'AppData/User';
+import Utils from 'AppData/Utils';
 import ChatBotIcon from './ChatIcon';
 import ChatWindow from './ChatWindow';
 
@@ -13,6 +15,26 @@ function AISearchAssistant() {
         // eslint-disable-next-line max-len
         content: 'Hi there! I\'m Marketplace assistant. I can help you with finding APIs and providing information related to APIs. How can I help you?',
     };
+    const [user, setUser] = useState('You');
+
+    const getUser = (environmentName = Utils.getCurrentEnvironment().label) => {
+        const userData = localStorage.getItem(`${User.CONST.LOCALSTORAGE_USER}_${environmentName}`);
+        const partialToken = Utils.getCookie(User.CONST.WSO2_AM_TOKEN_1, environmentName);
+        const refreshToken = Utils.getCookie(User.CONST.WSO2_AM_REFRESH_TOKEN_1, environmentName);
+
+        const isLoginCookie = Utils.getCookie('IS_LOGIN', 'DEFAULT');
+        if (isLoginCookie) {
+            Utils.deleteCookie('IS_LOGIN', Settings.app.context, 'DEFAULT');
+            localStorage.removeItem(`${User.CONST.LOCALSTORAGE_USER}_${environmentName}`);
+            return null;
+        }
+        if (!(userData && (partialToken || refreshToken))) {
+            return null;
+        }
+
+        return User.fromJson(JSON.parse(userData), environmentName);
+    };
+
     const getMessages = () => {
         const messagesJSON = localStorage.getItem('messages');
         const loadedMessages = JSON.parse(messagesJSON);
@@ -40,6 +62,8 @@ function AISearchAssistant() {
 
     useEffect(() => {
         try {
+            const { name } = getUser();
+            setUser(name);
             const messagesJSON = localStorage.getItem('messages');
             const loadedMessages = JSON.parse(messagesJSON);
             if (loadedMessages) {
@@ -73,7 +97,7 @@ function AISearchAssistant() {
         content = null;
     } else if (showChatbot) {
         content = (
-            <Box position='absolute' bottom={24} right={100}>
+            <Box position='absolute' bottom={24} right={24}>
                 <ChatBotIcon toggleChatbot={toggleChatbot} handleDisableChatbot={handleDisableChatbot} chatbotDisabled={chatbotDisabled} />
             </Box>
         );
@@ -85,6 +109,7 @@ function AISearchAssistant() {
                 setMessages={setMessages}
                 tenantDomain={tenantDomain}
                 introMessage={introMessage}
+                user={user}
             />
         );
     }

@@ -7,9 +7,6 @@ import {
 import { MuiMarkdown } from 'mui-markdown';
 import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
-import Settings from 'Settings';
-import User from 'AppData/User';
-import Utils from 'AppData/Utils';
 
 /**
  * Renders a single Chat Message view.
@@ -17,28 +14,8 @@ import Utils from 'AppData/Utils';
  * @returns {JSX} Renders single Chat Message view.
  */
 function ChatMessage(props) {
-    const { message } = props;
+    const { message, user } = props;
     const outerBoxRef = useRef(null);
-
-    const getUser = (environmentName = Utils.getCurrentEnvironment().label) => {
-        const userData = localStorage.getItem(`${User.CONST.LOCALSTORAGE_USER}_${environmentName}`);
-        const partialToken = Utils.getCookie(User.CONST.WSO2_AM_TOKEN_1, environmentName);
-        const refreshToken = Utils.getCookie(User.CONST.WSO2_AM_REFRESH_TOKEN_1, environmentName);
-
-        const isLoginCookie = Utils.getCookie('IS_LOGIN', 'DEFAULT');
-        if (isLoginCookie) {
-            Utils.deleteCookie('IS_LOGIN', Settings.app.context, 'DEFAULT');
-            localStorage.removeItem(`${User.CONST.LOCALSTORAGE_USER}_${environmentName}`);
-            return null;
-        }
-        if (!(userData && (partialToken || refreshToken))) {
-            return null;
-        }
-
-        return User.fromJson(JSON.parse(userData), environmentName);
-    };
-
-    const { name } = getUser();
 
     const profileStyle = {
         width: '30px',
@@ -156,7 +133,7 @@ function ChatMessage(props) {
                         <PersonIcon fontSize='medium' style={{ fill: '#fff', stroke: '#fff' }} />
                     </div>
                     <Typography variant='body1' style={{ fontWeight: 'bold', fontSize: '12pt' }}>
-                        {name.charAt(0).toUpperCase() + name.slice(1)}
+                        {user.charAt(0).toUpperCase() + user.slice(1)}
                     </Typography>
                 </Box>
             )}

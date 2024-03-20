@@ -19,7 +19,7 @@ import Header from './Header';
  */
 function ChatWindow(props) {
     const {
-        toggleChatbot, toggleClearChatbot, messages, setMessages, tenantDomain, introMessage,
+        toggleChatbot, toggleClearChatbot, messages, setMessages, tenantDomain, introMessage, user,
     } = props;
 
     const [loading, setLoading] = useState(false);
@@ -176,9 +176,9 @@ function ChatWindow(props) {
                 style={{
                     padding: 0,
                     backgroundColor: '#fff',
-                    border: '0.5px solid #0f0f0f',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                    borderRadius: '8px',
+                    border: '2px solid #1f84a1',
+                    boxShadow: '0 2px 2px rgba(0,0,0,0.3)',
+                    borderRadius: '4px',
                     margin: '4px 4px 4px 0',
                 }}
             >
@@ -222,6 +222,7 @@ function ChatWindow(props) {
                             loading={loading}
                             onSend={handleSend}
                             onReset={handleReset}
+                            user={user}
                         />
                     </Box>
                 </Box>

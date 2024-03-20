@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, IconButton, Snackbar } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
+import { TextField, Snackbar } from '@mui/material';
+// import SendIcon from '@mui/icons-material/Send';
 
 /**
  * Renders Chat Input view..
@@ -59,22 +59,8 @@ function ChatInput(props) {
                 maxRows={12}
                 InputProps={{
                     style: {
-                        borderRadius: 10, padding: 14,
+                        borderRadius: 10, padding: 18,
                     },
-                    endAdornment: (
-                        <IconButton
-                            onClick={handleSend}
-                            size='small'
-                            sx={{
-                                marginRight: '0px',
-                                marginLeft: '10px',
-                                width: '40px',
-                                borderRadius: '4px',
-                            }}
-                        >
-                            <SendIcon />
-                        </IconButton>
-                    ),
                 }}
             />
             <Snackbar

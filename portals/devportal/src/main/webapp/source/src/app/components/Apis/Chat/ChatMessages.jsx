@@ -12,7 +12,9 @@ import Loader from './Loader';
  * @returns {JSX} renders Chat Messages view.
  */
 function ChatMessages(props) {
-    const { messages, loading, onSend } = props;
+    const {
+        messages, loading, onSend, user,
+    } = props;
     const messagesEndRef = useRef(null);
 
     const style = {
@@ -51,7 +53,7 @@ function ChatMessages(props) {
                     {messages.map((message, index) => (
                         // eslint-disable-next-line react/no-array-index-key
                         <Box key={index} my={1}>
-                            <ChatMessage message={message} />
+                            <ChatMessage message={message} user={user} />
                         </Box>
                     ))}
 
