@@ -6,18 +6,14 @@ import { makeStyles } from '@mui/styles';
 import 'react-resizable/css/styles.css';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
-// import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone';
 import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
-// import KeyboardDoubleArrowLeftTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowLeftTwoTone';
-// import KeyboardDoubleArrowRightTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowRightTwoTone';
 import Tooltip from '@mui/material/Tooltip';
 import RestartAltTwoToneIcon from '@mui/icons-material/RestartAltTwoTone';
-// import ChatIcon from '@mui/icons-material/Chat';
 
 const useStyles = makeStyles(() => ({
     button: {
         '&:hover': {
-            backgroundColor: '#096183', // Disable hover effect
+            backgroundColor: '#096183',
         },
     },
 }));
@@ -32,10 +28,8 @@ function Header(props) {
             display='flex'
             flexDirection='row'
             justifyContent='space-between'
-            // marginBottom={0}
             borderBottom={2}
             borderColor='#1f84a1'
-            // borderRadius='28px 28px 0 0'
         >
             <Box>
                 <IconButton
@@ -85,6 +79,5 @@ Header.propTypes = {
     toggleFullScreen: PropTypes.func.isRequired,
     isClicked: PropTypes.bool.isRequired,
     handleReset: PropTypes.func.isRequired,
-    // handleClear: PropTypes.func.isRequired,
 };
 export default Header;

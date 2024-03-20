@@ -1,19 +1,17 @@
+/* eslint-disable no-constant-condition */
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Api from 'AppData/api';
 import {
     Container, Box,
 } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import { ResizableBox } from 'react-resizable';
-// import queryString from 'query-string';
 import 'react-resizable/css/styles.css';
-import ChatMessages from './ChatMessages';
-import Header from './Header';
+import ChatMessages from '../ChatMessages';
+import Header from '../Header';
 
-// import ErrorBox from './ErrorBox';
 /**
  * Renders Chat Messages view..
  * @param {JSON} props Parent pros.
@@ -21,7 +19,7 @@ import Header from './Header';
  */
 function ChatWindow(props) {
     const {
-        toggleChatbot, toggleClearChatbot, messages, setMessages, tenantDomain, introMessage,
+        toggleChatbot, messages, setMessages, tenantDomain, introMessage,
     } = props;
 
     const [loading, setLoading] = useState(false);
@@ -30,8 +28,8 @@ function ChatWindow(props) {
     const [apisCount, setApisCount] = useState(0);
     const responseRef = useRef([]);
 
-    const pathName = window.location.pathname;
-    const { search, origin } = window.location;
+    // const pathName = window.location.pathname;
+    // const { search, origin } = window.location;
 
     const toggleFullScreen = (e) => {
         e.preventDefault();
@@ -40,35 +38,82 @@ function ChatWindow(props) {
 
     const apiCall = (query) => {
         setLoading(true);
-        console.log(query);
         console.log(tenantDomain);
 
-        const restApi = new Api();
-        const messagesWithoutApis = messages.map(({ apis, ...message }) => message);
+        // const restApi = new Api();
+        // const messagesWithoutApis = messages.map(({ apis, ...message }) => message);
 
-        return restApi
-            .marketplaceChatExecute(
-                query, 'chat', tenantDomain, messagesWithoutApis,
-            )
-            .then(() => {
-            // try {
-            //     responseRef.current = [...responseRef.current, { role: 'assistant', content: result.body.content.trim() }];
-            //     setMessages(responseRef.current);
-            //     return result.body;
-            // } catch (error) {
-            //     responseRef.current = [...responseRef.current, { role: 'assistant', content: 'Error occurred. Please try again later.' }];
-            //     setMessages(responseRef.current);
-            //     throw error;
-            // }
+        // return restApi
+        // .postAisearchassistant(
+        //     query, tenantDomain, messagesWithoutApis,
+        // )
+        // .then(() => {
+        //     // try {
+        //     //     responseRef.current = [...responseRef.current, { role: 'assistant', content: result.body.content.trim() }];
+        //     //     setMessages(responseRef.current);
+        //     //     return result.body;
+        //     // } catch (error) {
+        //     //     responseRef.current = [...responseRef.current, { role: 'assistant', content: 'Error occurred. Please try again later.' }];
+        //     //     setMessages(responseRef.current);
+        //     //     throw error;
+        //     // }
 
-                const apis = [{ id: 'e3d67198-eb8e-46f4-bb93-ef28385a8809', name: 'GramaCheckIdentityCheck-Endpoint7070' }, { id: 'e3d67198-eb8e-46f4-bb93-ef28385a8809', name: 'PoliceCheckAPIpvm-PoliceCheck' }, { id: 'e3d67198-eb8e-46f4-bb93-ef28385a8809', name: 'PizzaShackApi' }];
+        setApiLimitExceeded(true);
 
-                const apiPaths = apis.map((api) => {
-                    return { apiPath: `${origin}${pathName}/${api.id}/overview${search}`, name: api.name };
-                });
-                responseRef.current = [...responseRef.current, { role: 'assistant', content: "Hi, I'm your assistant. How can I help you?", apis: apiPaths }];
+        //     const apis = [{ id: 'e3d67198-eb8e-46f4-bb93-ef28385a8809', name: 'GramaCheckIdentityCheck-Endpoint7070' }, { id: 'e3d67198-eb8e-46f4-bb93-ef28385a8809', name: 'PoliceCheckAPIpvm-PoliceCheck' }, { id: 'e3d67198-eb8e-46f4-bb93-ef28385a8809', name: 'PizzaShackApi' }];
+
+        //     const apiPaths = apis.map((api) => {
+        //         return { apiPath: `${href}/${api.id}/overview${search}`, name: api.name };
+        //     });
+        //     responseRef.current = [...responseRef.current, { role: 'assistant', content: "Hi, I'm your assistant. How can I help you?", apis: apiPaths }];
+        //     setMessages(responseRef.current);
+        //     //     return result.body;
+        // })
+
+        fetch('https://e95488c8-8511-4882-967f-ec3ae2a0f86f-prod.e1-us-east-azure.choreoapis.dev/lgpt/marketplaceapi/marketplace-assistant-api-be2/v1.0/marketplace-assistant', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // eslint-disable-next-line max-len
+                Authorization: 'Bearer eyJ4NXQiOiJOalJrT0ROak1qZ3dPV0ZpTUdNMU9HUTRPV1E1TmpZMlpUWXpOakkyTnpnelkyVTJPREl5WmpFeE4yWTVNVEU0WVRoaE5ETTBPR0l6WW1JeE5qUmpZZyIsImtpZCI6Ik5qUmtPRE5qTWpnd09XRmlNR00xT0dRNE9XUTVOalkyWlRZek5qSTJOemd6WTJVMk9ESXlaakV4TjJZNU1URTRZVGhoTkRNME9HSXpZbUl4TmpSallnX1JTMjU2IiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJmZWNiYzg2OS1kMDg3LTQ5Y2MtYThhNC03N2VkYmMzNGJmY2MiLCJhdXQiOiJBUFBMSUNBVElPTiIsImF1ZCI6WyJfYmlrNVFRa2lPZ1B5cDRyOUFNY0VJSzc5UUVhIiwiY2hvcmVvOmRlcGxveW1lbnQ6cHJvZHVjdGlvbiJdLCJuYmYiOjE3MTA4MjMzMzYsImF6cCI6Il9iaWs1UVFraU9nUHlwNHI5QU1jRUlLNzlRRWEiLCJvcmdfaWQiOiJlOTU0ODhjOC04NTExLTQ4ODItOTY3Zi1lYzNhZTJhMGY4NmYiLCJpc3MiOiJodHRwczpcL1wvYXBpLmFzZ2FyZGVvLmlvXC90XC93c28yZGV2dG9vbHNcL29hdXRoMlwvdG9rZW4iLCJleHAiOjE3MTA5MDk3MzYsIm9yZ19uYW1lIjoid3NvMmRldnRvb2xzIiwiaWF0IjoxNzEwODIzMzM2LCJqdGkiOiJiODZmYzU2OS01YmMzLTQ2NmEtYjVjNC05YTU0NjM5MDlkNzkiLCJjbGllbnRfaWQiOiJfYmlrNVFRa2lPZ1B5cDRyOUFNY0VJSzc5UUVhIn0.zTc4YaJbvaYxiyLCgzqVlCpKLYfsZn6TvF_ryL65M5mOl7QYK-YPTlCllje_KU55ao9xtZ3Dy07Hyp2h9wgyiwL1QuCRyhL6mHTqm3Ak1aa5jZ7Vtl3euA-XfElzahuKdknL6Q99yXSpEU6dLS09V482nlc07AcdqZ6UDcq46D8Wl3zRB-m4d5zTtkYM_hLtmKI6rvIjUewVeIZNlJYQs57JEmnuegc9NiA64tRP8W2DJ9HzbgfqCG6MTZSSCKe3cbO3OPglCh3Cj8fNPQ8Ao5JE7FFG7xmROu5AtAoD-ik4tm9NW2dYFMZnq4jplGUe4CwJLw5J9JBD8PjHz6rfmA',
+            },
+            body: JSON.stringify({ message: query }),
+        })
+            .then((response) => {
+                if (!response.body || !response.body.pipeTo) {
+                    throw new Error('ReadableStream not available');
+                }
+
+                const reader = response.body.getReader();
+
+                let stream = '';
+
+                const processStream = async () => {
+                    try {
+                        while (true) {
+                            // eslint-disable-next-line no-await-in-loop
+                            const { done, value } = await reader.read();
+
+                            if (done) {
+                                break;
+                            }
+
+                            const streamData = new TextDecoder().decode(value);
+
+                            stream += streamData;
+
+                            responseRef.current = [...responseRef.current.slice(0, -1), { role: 'assistant', content: stream }]; // , apis: apiPaths
+                            setMessages(responseRef.current);
+                        }
+                    } catch (error) {
+                        // eslint-disable-next-line max-len
+                        responseRef.current = [...responseRef.current.slice(0, -1), { role: 'assistant', content: 'Sorry, Something went wrong!' }];
+                    }
+                };
+
+                responseRef.current = [...responseRef.current, { role: 'assistant', content: '' }];
                 setMessages(responseRef.current);
-            //     return result.body;
+                processStream();
             })
             .catch((error) => {
                 let content;
@@ -102,11 +147,6 @@ function ChatWindow(props) {
             });
     };
 
-    const handleClear = () => {
-        setMessages([introMessage]);
-        toggleClearChatbot();
-    };
-
     const handleSend = async (message) => {
         responseRef.current = [...responseRef.current, { role: 'user', content: message.content.trim() }];
         setMessages(responseRef.current);
@@ -120,21 +160,25 @@ function ChatWindow(props) {
 
     useEffect(() => {
         responseRef.current = messages;
-        setApisCount(5);
-        setApiLimitExceeded(false);
-        // const restApi = new Api();
-
-        // return restApi
-        //     .getApiCount(tenantDomain)
+        setApisCount(48);
+        // fetch('http://localhost:7070/ai/marketplace-chat/api-count', {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'text/plain',
+        //     },
+        // })
+        //     .then((response) => {
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+        //         return response.json();
+        //     })
         //     .then((data) => {
         //         const apis = parseInt(data, 10);
         //         setApisCount(apis);
-        //         if (apis > 1000) {
-        //             setApiLimitExceeded(true);
-        //         }
         //     })
         //     .catch((error) => {
-        //         console.error(error);
+        //         console.error('Error:', error);
         //     });
     }, []);
 
@@ -179,7 +223,6 @@ function ChatWindow(props) {
                 <Box
                     display='flex'
                     flexDirection='column'
-                    // justifyContent='flex'
                     style={{
                         height: '100%',
                     }}
@@ -187,18 +230,16 @@ function ChatWindow(props) {
                     <Header
                         toggleChatbot={toggleChatbot}
                         toggleFullScreen={toggleFullScreen}
-                        handleClear={handleClear}
                         handleReset={handleReset}
                         isClicked={isClicked}
                     />
                     {apiLimitExceeded ? (
                         <Alert severity='warning' style={{ borderRadius: '0px', zIndex: 2999, padding: '0 10px 0 10px' }}>
-                            {/* <AlertTitle>Warning</AlertTitle> */}
                             You have reached your maximum number of apis. The answers will be limited to the first 1000 apis.
                         </Alert>
                     ) : (
                         <Alert severity='info' style={{ borderRadius: '0px', zIndex: 2999, padding: '0 10px 0 10px' }}>
-                            {`You have reached ${apisCount} apis out of 1000.`}
+                            {`The assistant is using ${apisCount} APIs to answer your questions.`}
                         </Alert>
                     )}
 
@@ -226,8 +267,9 @@ function ChatWindow(props) {
 
 ChatWindow.propTypes = {
     toggleChatbot: PropTypes.func.isRequired,
-    toggleClearChatbot: PropTypes.func.isRequired,
     messages: PropTypes.instanceOf(Array).isRequired,
     setMessages: PropTypes.func.isRequired,
+    tenantDomain: PropTypes.string.isRequired,
+    introMessage: PropTypes.instanceOf(Object).isRequired,
 };
 export default ChatWindow;

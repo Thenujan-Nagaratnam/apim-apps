@@ -1,14 +1,12 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-// Define keyframes for animation
 const l7Animation = keyframes`
     33% { background-size: calc(100%/3) 0%, calc(100%/3) 100%, calc(100%/3) 100%; }
     50% { background-size: calc(100%/3) 100%, calc(100%/3) 0%, calc(100%/3) 100%; }
     66% { background-size: calc(100%/3) 100%, calc(100%/3) 100%, calc(100%/3) 0%; }
 `;
 
-// Styled component for the loader
 const LoaderStyle = styled.div`
   width: 30px;
   aspect-ratio: 4;
@@ -21,7 +19,6 @@ const LoaderStyle = styled.div`
   animation: ${l7Animation} 1s infinite linear;
 `;
 
-// React component
 const Loader = () => {
     return (
         <LoaderStyle />

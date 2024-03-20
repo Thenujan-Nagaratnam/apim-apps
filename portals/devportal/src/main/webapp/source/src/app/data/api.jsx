@@ -762,29 +762,25 @@ export default class API extends Resource {
         });
     }
 
-    // /**
-    //  * Get API recommendations for a given user.
-    //  * @param {string} userId The username.
-    //  * @return {Promise}
-    //  * */
     // eslint-disable-next-line no-dupe-class-members, require-jsdoc
-    getAisearchassistant(query, action, tenantDomain) {
-        // it doesnt matter what name you have here, it is somehow automatically get the tenantDomian from the call
-        // console.log('tenantDomainweee', tenantDomain);
-        const promiseGet = this.client.then((client) => {
-            return client.apis.APIs.get_apis_chat(query, action, tenantDomain, this._requestMetaData());
-        });
-        return promiseGet;
-    }
-
-    // eslint-disable-next-line no-dupe-class-members, require-jsdoc
-    postAisearchassistant(query, action, tenantDomain, chatHistory) {
-        console.log(chatHistory);
+    marketplaceChatExecute(query, action, tenantDomain, chatHistory) {
+        console.log(this.client);
         const messages = { messages: chatHistory };
         return this.client.then((client) => {
             const payload = { requestBody: messages };
             const args = { 'Content-Type': 'application/json' };
-            return client.apis.APIs.post_apis_chat({ query, action, tenantDomain }, payload, args);
+            return client.apis['Marketplace Chat'].marketplaceChatExecute({ query, action, tenantDomain }, payload, args);
+        });
+    }
+
+    // eslint-disable-next-line require-jsdoc
+    getMarketplaceChatApiCount() {
+        console.log(this.client);
+        // const messages = { messages: chatHistory };
+        return this.client.then((client) => {
+            // const payload = { requestBody: messages };
+            const args = { 'Content-Type': 'application/json' };
+            return client.apis['Marketplace Chat'].getMarketplaceChatApiCount({ query, action, tenantDomain }, payload, args);
         });
     }
 

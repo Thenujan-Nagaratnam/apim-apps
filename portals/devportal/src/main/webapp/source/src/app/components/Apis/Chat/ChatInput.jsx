@@ -1,16 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@mui/styles';
 import { TextField, IconButton, Snackbar } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-
-const useStyles = makeStyles(() => ({
-    button: {
-        '&:hover': {
-            backgroundColor: '#0fa2db', // Disable hover effect
-        },
-    },
-}));
 
 /**
  * Renders Chat Input view..
@@ -21,8 +12,6 @@ function ChatInput(props) {
     const { onSend } = props;
     const [content, setContent] = useState('');
     const [notificationOpen, setNotificationOpen] = useState(false);
-    const textareaRef = useRef(null);
-    const classes = useStyles();
 
     const handleChange = (e) => {
         const { value } = e.target;
@@ -57,13 +46,6 @@ function ChatInput(props) {
         setNotificationOpen(false);
     };
 
-    useEffect(() => {
-        if (textareaRef && textareaRef.current) {
-            textareaRef.current.style.height = 'inherit';
-            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-        }
-    }, [content]);
-
     return (
         <div>
             <TextField
@@ -80,16 +62,13 @@ function ChatInput(props) {
                         borderRadius: 10, padding: 14,
                     },
                     endAdornment: (
-                        // eslint-disable-next-line max-len
                         <IconButton
-                            className={classes.button}
                             onClick={handleSend}
                             size='small'
                             sx={{
                                 marginRight: '0px',
                                 marginLeft: '10px',
                                 width: '40px',
-                                // backgroundColor: '#f9f9f0',
                                 borderRadius: '4px',
                             }}
                         >
@@ -99,7 +78,7 @@ function ChatInput(props) {
                 }}
             />
             <Snackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                 open={notificationOpen}
                 autoHideDuration={500}
                 onClose={handleCloseNotification}
