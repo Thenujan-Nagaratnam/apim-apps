@@ -15,7 +15,7 @@ function AISearchAssistant() {
     const introMessage = {
         role: 'assistant',
         // eslint-disable-next-line max-len
-        content: 'Hi there! I\'m Marketplace assistant. I can help you with finding APIs and providing information related to APIs. How can I help you?',
+        content: 'Hi there! I\'m Marketplace Assistant. I can help you with finding APIs and providing information related to APIs. How can I help you?',
     };
     const [user, setUser] = useState('You');
 

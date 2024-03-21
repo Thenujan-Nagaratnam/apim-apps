@@ -30,7 +30,7 @@ function ChatBotIcon(props) {
     return (
         <>
             <div
-                style={{ position: 'fixed', bottom: 70, right: 36 }}
+                style={{ position: 'fixed', bottom: 70, right: 24 }}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >

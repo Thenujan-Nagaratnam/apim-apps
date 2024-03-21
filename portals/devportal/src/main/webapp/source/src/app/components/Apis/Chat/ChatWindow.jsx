@@ -43,7 +43,7 @@ function ChatWindow(props) {
         setLoading(true);
 
         const restApi = new Api();
-        const messagesWithoutApis = messages.map(({ apis, ...message }) => message);
+        const messagesWithoutApis = messages.slice(-10).map(({ apis, ...message }) => message);
 
         return restApi
             .marketplaceChatExecute(
@@ -113,7 +113,7 @@ function ChatWindow(props) {
             .then((data) => {
                 const apis = parseInt(data.body.count, 10);
                 setApisCount(apis);
-                if (apis > 1000) {
+                if (data.body.apiLimitExceeded) {
                     setApiLimitExceeded(true);
                 }
             })
@@ -195,7 +195,7 @@ function ChatWindow(props) {
                         </Alert>
                     ) : (
                         <Alert severity='info' style={{ borderRadius: '0px', zIndex: 2999, padding: '0 10px 0 10px' }}>
-                            {`You have reached ${apisCount} apis out of 1000.`}
+                            {`The Assistant is using ${apisCount} apis to provide answers.`}
                         </Alert>
                     )}
 

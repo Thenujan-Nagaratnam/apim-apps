@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Snackbar } from '@mui/material';
+import {
+    TextField, Snackbar,
+} from '@mui/material';
 
 /**
  * Renders Chat Input view..

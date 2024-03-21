@@ -1,8 +1,9 @@
+/* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, IconButton, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+// import { makeStyles } from '@mui/styles';
 import 'react-resizable/css/styles.css';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
@@ -10,19 +11,19 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import Tooltip from '@mui/material/Tooltip';
 import RestartAltTwoToneIcon from '@mui/icons-material/RestartAltTwoTone';
 
-const useStyles = makeStyles(() => ({
-    button: {
-        '&:hover': {
-            backgroundColor: '#096183',
-        },
-    },
-}));
+// const useStyles = makeStyles(() => ({
+//     button: {
+//         '&:hover': {
+//             backgroundColor: '#096183',
+//         },
+//     },
+// }));
 
 function Header(props) {
     const {
         toggleChatbot, toggleFullScreen, isClicked, handleReset,
     } = props;
-    const classes = useStyles();
+    // const classes = useStyles();
     return (
         <Box
             display='flex'
@@ -51,19 +52,9 @@ function Header(props) {
                     </IconButton>
                 </Tooltip>
             </Box>
-            <Box>
-                <IconButton
-                    sx={{
-                        width: '160px',
-                        backgroundColor: '#096183',
-                        borderRadius: '6px',
-                        alignSelf: 'flex-end',
-                        padding: '10px',
-                    }}
-                    className={classes.button}
-                >
-                    <Typography variant='body1' color='#ffffff' marginLeft='10px'>AI-Assistant</Typography>
-                </IconButton>
+            <Box display='flex'>
+                <Typography variant='body1' fontWeight='500' color='#000' padding='5px 8px 3px 8px' margin='12px 0 12px 0'>AI Assistant</Typography>
+                <Typography variant='body1' fontWeight='bold' color='#fff' padding='5px 8px 3px 8px' margin='12px 0 12px 0' backgroundColor='#297d9e' borderRadius='10px'>Beta</Typography>
                 <IconButton
                     onClick={toggleChatbot}
                     style={{ alignSelf: 'flex-end', padding: '12px', marginRight: '6px' }}

@@ -17,6 +17,9 @@ function ChatMessages(props) {
     } = props;
     const messagesEndRef = useRef(null);
 
+    // eslint-disable-next-line max-len
+    const subjectLine = 'AI Assistant can make mistakes. Consider checking important information.';
+
     const style = {
         width: '30px',
         height: '30px',
@@ -40,6 +43,7 @@ function ChatMessages(props) {
             display='flex'
             flexDirection='column'
             marginLeft='5%'
+            // marginRight='5%'
         >
             <Box
                 display='flex'
@@ -67,7 +71,7 @@ function ChatMessages(props) {
                                 <div style={style}>
                                     <ChatIcon fontSize='small' style={{ fill: '#fff', stroke: '#fff' }} />
                                 </div>
-                                <Typography variant='body1' style={{ fontWeight: 'bold', fontSize: '12pt' }}>Assistant</Typography>
+                                <Typography variant='body1' style={{ fontWeight: '500', fontSize: '12pt' }}>Assistant</Typography>
                             </Box>
                             <Box
                                 textAlign='left'
@@ -93,14 +97,27 @@ function ChatMessages(props) {
                 justifyContent='center'
             >
                 <Box
-                    mb={3.5}
                     mt={1.5}
+                    mb={0.5}
                     width='100%'
                     maxWidth='1380px'
                     marginRight='5%'
                 >
                     <ChatInput onSend={onSend} />
                 </Box>
+
+            </Box>
+            <Box mb={0.75}>
+                <Typography
+                    color='#64686e'
+                    variant='body2'
+                    fontSize='8pt'
+                    textAlign='center'
+                    lineHeight='1.4'
+                    marginRight='5%'
+                >
+                    {subjectLine}
+                </Typography>
             </Box>
         </Box>
     );

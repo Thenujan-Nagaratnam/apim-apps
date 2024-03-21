@@ -91,9 +91,9 @@ function ChatMessage(props) {
                 <Box display='flex-start' alignItems='center' flexDirection='column' width='90%'>
                     <Box display='flex' alignItems='center' width='100%'>
                         <div style={profileStyle}>
-                            <ChatIcon fontSize='small' style={{ fill: '#fff', stroke: '#fff' }} />
+                            <ChatIcon style={{ fill: '#fff', stroke: '#fff', fontSize: 'small' }} />
                         </div>
-                        <Typography variant='body1' style={{ fontWeight: 'bold', fontSize: '12pt' }}>Assistant</Typography>
+                        <Typography variant='body1' style={{ fontWeight: '500', fontSize: '12pt' }}>Assistant</Typography>
                     </Box>
                     {message.apis && (
                         <Box display='flex' flexDirection='row' flexWrap='wrap' marginLeft='26px' marginRight='16px' width='100%'>
@@ -101,7 +101,7 @@ function ChatMessage(props) {
                                 // eslint-disable-next-line max-len
                                 <a key={index} href={api.apiPath} target='_blank' rel='noopener noreferrer' style={{ textDecoration: 'none', color: 'inherit', width: '33%' }}>
                                     <Card style={{
-                                        margin: '0 10px 10px 0', width: '95%', height: '56px', backgroundColor: '#40a4de',
+                                        margin: '0 10px 10px 0', width: '97%', height: '56px', backgroundColor: '#6694a7',
                                     }}
                                     >
                                         <CardContent style={{ wordWrap: 'break-word' }}>
@@ -114,6 +114,7 @@ function ChatMessage(props) {
                                                     textOverflow: 'ellipsis',
                                                     cursor: 'pointer',
                                                     margin: 0,
+                                                    color: '#fff',
                                                 }}
                                             >
                                                 {api.name}
@@ -130,9 +131,9 @@ function ChatMessage(props) {
             {message.role === 'user' && (
                 <Box display='flex' alignItems='center'>
                     <div style={profileStyle}>
-                        <PersonIcon fontSize='medium' style={{ fill: '#fff', stroke: '#fff' }} />
+                        <PersonIcon style={{ fill: '#fff', stroke: '#fff', fontSize: 'large' }} />
                     </div>
-                    <Typography variant='body1' style={{ fontWeight: 'bold', fontSize: '12pt' }}>
+                    <Typography variant='body1' fontWeight='500' fontSize='12pt'>
                         {user.charAt(0).toUpperCase() + user.slice(1)}
                     </Typography>
                 </Box>
