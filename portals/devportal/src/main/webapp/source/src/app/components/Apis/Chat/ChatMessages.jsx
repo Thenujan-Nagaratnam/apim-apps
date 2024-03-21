@@ -107,7 +107,7 @@ function ChatMessages(props) {
                 </Box>
 
             </Box>
-            <Box mb={0.75}>
+            <Box mb={1}>
                 <Typography
                     color='#64686e'
                     variant='body2'

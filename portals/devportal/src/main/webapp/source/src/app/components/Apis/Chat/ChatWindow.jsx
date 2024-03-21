@@ -141,13 +141,13 @@ function ChatWindow(props) {
 
         <ResizableBox
             width={isClicked ? window.innerWidth : 500}
-            height={window.innerHeight - 110}
+            height={window.innerHeight - 64}
             minConstraints={[500, window.innerHeight]}
-            maxConstraints={[window.innerWidth, window.innerHeight - 110]}
+            maxConstraints={[window.innerWidth, window.innerHeight - 64]}
             resizeHandles={['w']}
             style={{
                 position: 'fixed',
-                bottom: 48,
+                bottom: 1,
                 right: 0,
                 display: 'flex',
                 justifyContent: 'flex-start',
