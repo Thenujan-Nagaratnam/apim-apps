@@ -19,7 +19,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, IconButton, Typography } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
 import 'react-resizable/css/styles.css';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
@@ -38,12 +37,10 @@ const classes = {
 
 const Root = styled('div')(({ theme }) => ({
     [`& .${classes.chatbotNameBox}`]: {
-        padding: '2px 18px 1px 10px',
-        margin: '12px 0 12px auto',
-        borderBottom: '2px solid #10597f',
-        borderLeft: '2px solid #10597f',
-        borderRight: '2px solid #10597f',
-        borderRadius: '38px',
+        padding: '2px 8px',
+        margin: '6px 10px 6px auto',
+        background: theme.palette.grey[200],
+        borderRadius: '4px',
     },
     [`& .${classes.chatbotName}`]: {
         marginBottom: -5,
@@ -79,7 +76,7 @@ function Header(props) {
                     <IconButton
                         onClick={toggleFullScreen}
                         style={{
-                            alignSelf: 'flex-end', padding: '12px', color: '#10597f', margin: '6px 2px',
+                            alignSelf: 'flex-end', padding: 'auto', color: '#10597f', margin: '6px 2px',
                         }}
                     >
                         {isClicked ? (
@@ -92,32 +89,34 @@ function Header(props) {
                         <IconButton
                             onClick={handleReset}
                             style={{
-                                alignSelf: 'flex-end', padding: '12px', color: '#10597f', margin: '6px 0',
+                                alignSelf: 'flex-end', padding: 'auto', color: '#10597f', margin: '6px 0',
                             }}
                         >
                             <RestartAltTwoToneIcon fontSize='large' />
                         </IconButton>
                     </Tooltip>
                 </Box>
-                <Box display='flex' flexDirection='column' className={classes.chatbotNameBox}>
-                    <Typography variant='body1' className={classes.chatbotName}>
-                        <FormattedMessage
-                            id='Apis.Chat.Header.MarketplaceAssistantBanner.title'
-                            defaultMessage='API Marketplace Assistant'
-                        />
-                    </Typography>
-                    <Typography variant='caption' sx={{ textAlign: 'right', marginRight: -1 }}>
-                        <FormattedMessage
-                            id='Apis.Chat.Header.MarketplaceAssistantBanner.experimental'
-                            defaultMessage='Experimental'
-                        />
-                    </Typography>
+                <Box display='flex' flexDirection='column' className={classes.chatbotNameBox} justifyContent='flex-end'>
+                    <Box display='flex' flexDirection='column'>
+                        <Typography variant='body1' color='#10597f' fontWeight='bold'>
+                            API Marketplace Assistant
+                            <sup style={{
+                                marginLeft: '4px', textDecoration: 'underline', fontSize: 'smaller', color: '#10597f',
+                            }}
+                            >
+                                Experimental
+                            </sup>
+                        </Typography>
+                        <Typography variant='caption' color='textSecondary'>
+                            Helping you find the best APIs
+                        </Typography>
+                    </Box>
                 </Box>
                 <Box>
                     <IconButton
                         onClick={toggleChatbot}
                         style={{
-                            alignSelf: 'flex-end', padding: '12px', color: '#10597f', margin: '6px 2px',
+                            alignSelf: 'flex-end', padding: 'auto', color: '#10597f', margin: '6px 2px',
                         }}
                     >
                         <ExpandMoreTwoToneIcon fontSize='large' />
