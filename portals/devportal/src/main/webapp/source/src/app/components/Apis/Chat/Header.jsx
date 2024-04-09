@@ -26,6 +26,7 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import Tooltip from '@mui/material/Tooltip';
 import RestartAltTwoToneIcon from '@mui/icons-material/RestartAltTwoTone';
 import { styled, alpha } from '@mui/material/styles';
+import { app } from 'Settings';
 
 const PREFIX = 'marketplace-assistant-chatbot-header';
 
@@ -38,7 +39,7 @@ const classes = {
 const Root = styled('div')(({ theme }) => ({
     [`& .${classes.chatbotNameBox}`]: {
         padding: '2px 8px',
-        margin: '6px 10px 6px auto',
+        margin: '6px 4px 6px auto',
         background: theme.palette.grey[200],
         borderRadius: '4px',
     },
@@ -96,7 +97,13 @@ function Header(props) {
                         </IconButton>
                     </Tooltip>
                 </Box>
-                <Box display='flex' flexDirection='column' className={classes.chatbotNameBox} justifyContent='flex-end'>
+                <Box display='flex' flexDirection='row' className={classes.chatbotNameBox} justifyContent='flex-end'>
+                    <img
+                        alt='API Chat'
+                        src={`${app.context}/site/public/images/ai/ApiChat.svg`}
+                        width='40'
+                        height='40'
+                    />
                     <Box display='flex' flexDirection='column'>
                         <Typography variant='body1' color='#10597f' fontWeight='bold'>
                             API Marketplace Assistant
