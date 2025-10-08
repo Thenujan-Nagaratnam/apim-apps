@@ -1358,15 +1358,33 @@ class Details extends Component {
                                     />
                                     <Route
                                         path={Details.subPaths.TRYOUT}
-                                        render={(props) => <TryOutConsole {...props} apiObj={api} />}
+                                        render={(props) => {
+                                            return !readOnlyUser ? (
+                                                <TryOutConsole {...props} apiObj={api} />
+                                            ) : (
+                                                <ResourceNotFound />
+                                            );
+                                        }}
                                     />
                                     <Route
                                         path={Details.subPaths.TRYOUT_PRODUCT}
-                                        render={(props) => <TryOutConsole {...props} apiObj={api} />}
+                                        render={(props) => {
+                                            return !readOnlyUser ? (
+                                                <TryOutConsole {...props} apiObj={api} />
+                                            ) : (
+                                                <ResourceNotFound />
+                                            );
+                                        }}
                                     />
                                     <Route
                                         path={Details.subPaths.MCP_PLAYGROUND}
-                                        render={(props) => <TryOutConsole {...props} apiObj={api} />}
+                                        render={(props) => {
+                                            return !readOnlyUser ? (
+                                                <TryOutConsole {...props} apiObj={api} />
+                                            ) : (
+                                                <ResourceNotFound />
+                                            );
+                                        }}
                                     />
                                     <Route path={Details.subPaths.EXTERNAL_STORES}
                                         component={ExternalStores} />
