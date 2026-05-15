@@ -111,11 +111,15 @@ else
     echo "NPM Deos NOT exists and installing existing version."
 fi
 
-wget https://nodejs.org/dist/v12.22.3/node-v12.22.3-linux-x64.tar.xz
-tar -xvf node-v12.22.3-linux-x64.tar.xz
-sudo ln -s $HOME/node-v12.22.3-linux-x64/bin/node /usr/bin/node
-sudo ln -s $HOME/node-v12.22.3-linux-x64/bin/npm /usr/bin/npm
-sudo ln -s $HOME/node-v12.22.3-linux-x64/bin/npx /usr/bin/npx
+NODE_VERSION=v16.20.2
+wget https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz
+tar -xf node-${NODE_VERSION}-linux-x64.tar.xz
+sudo rm -f /usr/bin/node /usr/bin/npm /usr/bin/npx
+sudo ln -s $HOME/node-${NODE_VERSION}-linux-x64/bin/node /usr/bin/node
+sudo ln -s $HOME/node-${NODE_VERSION}-linux-x64/bin/npm /usr/bin/npm
+sudo ln -s $HOME/node-${NODE_VERSION}-linux-x64/bin/npx /usr/bin/npx
+node -v
+npm -v
 sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb -y
 export LC_CTYPE="en_US.UTF-8"
 cd $HOME
